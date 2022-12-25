@@ -3,6 +3,8 @@ package lesson.array.lesson5;
 import java.util.Random;
 
 public class LessonCode {
+    // for (int elem : arrays);
+    // for (int elem = 0; elem < arrays.length; elem++); (обращение к индексу)
     public static void main(String[] args) {
         LessonCode lesson5Code = new LessonCode();
         Random random = new Random();

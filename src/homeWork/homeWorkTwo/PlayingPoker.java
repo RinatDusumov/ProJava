@@ -1,4 +1,5 @@
 package homeWork.homeWorkTwo;
+import java.util.Scanner;
 
 public class PlayingPoker {
     public static void main(String[] args) {
@@ -7,16 +8,16 @@ public class PlayingPoker {
         Программа получает число n, задаваемое с консоли пользователем, и раздает карты на n игроков (по 5 карт каждому) из рассортированной колоды.
         Разделяйте пять карт, выданных каждому игроку, пустой строкой.
          */
-//        Scanner scanner = new Scanner(System.in);
-//        System.out.println("Напишите кол-во игроков");
-//        int numberOfPlayers = scanner.nextInt();
-//
-//        SortedDeck sortedDeck = new SortedDeck(numberOfPlayers);
-//        PokerTable[] players = sortedDeck.cardDistribution();
-//        for (int i = 0; i < players.length; i++) {
-//            System.out.println(players[1]);
-//            break;
-//        }
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Напишите кол-во игроков");
+        int numberOfPlayers = scanner.nextInt();
+
+        SortedDeck sortedDeck = new SortedDeck(numberOfPlayers);
+        PokerTable[] players = sortedDeck.cardDistribution();
+        for (int i = 0; i < players.length; i++) {
+            System.out.println(players[1]);
+            break;
+        }
 
         /* task 2
         При создании нескольких экземпляров одного класса
@@ -41,7 +42,7 @@ public class PlayingPoker {
 //        homeWork.solutions();
 
         /* доп. задание */
-        AdditionalTask additionalTask = new AdditionalTask();
-        additionalTask.decision();
+//        AdditionalTask additionalTask = new AdditionalTask();
+//        additionalTask.decision();
     }
 }
