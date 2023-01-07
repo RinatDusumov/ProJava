@@ -8,7 +8,7 @@ public class PersonDatabaseArrayDemo {
         // для сравнения объектов следует переопределить метод equals и установить правила по которым будет сравнение
         /* если что то создаёся внутри метода его требуется вернуть,
           иначе оно так и останется внутри
-         */
+        */
 
         Person[] personArray = new Person[5];
         personArray = getPersonArray(personArray);
