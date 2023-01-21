@@ -20,14 +20,16 @@ public class IntegerListDemo {
         numberList.remove(1);
         numberList.remove(newNumber);
 
-        if (numberList.size() != 0) {
-            System.out.println("Список не пустой");
-        }
+//        if (numberList.size() != 0) {
+//            System.out.println("Список не пустой");
+//        }
+        System.out.println(numberList.isEmpty());
 
         for (int i : numberList) {
             System.out.print(i + " ");
         }
         System.out.println();
+
         // task 2
         boolean possibility_Of_Storing_Duplicates = false;
         for (int i = 0; i < numberList.size(); i++) {
@@ -39,6 +41,6 @@ public class IntegerListDemo {
             }
         }
         System.out.println("Могут ли реализации интерфейса java.util.List хранить одинаковые " +
-                "элементы (дубликаты) - " + possibility_Of_Storing_Duplicates);
+                "элементы (дубликаты)? - " + possibility_Of_Storing_Duplicates);
     }
 }
