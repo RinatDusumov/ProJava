@@ -4,7 +4,7 @@ package algorithms._20_01_2023.merge;
     взаимодействующие друг с другом.
  */
 
-// merge более памятнозатратно нежели quick
+// merge более памятнозатратно нежели quick, но при большом кол-ве элементов merge работает быстрее
 // O(log n)
 
 import java.util.Random;

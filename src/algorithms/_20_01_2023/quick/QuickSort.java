@@ -1,4 +1,5 @@
 package algorithms._20_01_2023.quick;
+import java.util.Arrays;
 import java.util.Random;
 
 /* при делении на подмассивы нет выделения памяти
@@ -13,7 +14,10 @@ public class QuickSort {
             array[i] = new Random().nextInt(100_000_000);
         }
         long time = System.currentTimeMillis();
+        //System.out.println(Arrays.toString(array));
+        //System.out.println("************************");
         quickSort1 (array, 0, array.length - 1);
+        //System.out.println(Arrays.toString(array));
         System.out.println(System.currentTimeMillis() - time);
     }
     public static void quickSort1 (int[] array, int low, int high) {
