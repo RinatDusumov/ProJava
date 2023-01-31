@@ -1,4 +1,4 @@
-package main.java.students.rinat_dusumov._18_01_2023;
+package main.java.students.rinat_dusumov.homeWork._18_01_2023;
 
 import java.util.*;
 
