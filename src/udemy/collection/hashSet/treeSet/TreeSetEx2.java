@@ -28,9 +28,9 @@ public class TreeSetEx2 {
         Student st6 = new Student("Ivan", 4);
         System.out.println(treeSet.subSet(st2, st6)); // выводит элементы, что между элементами указанных в параметрах
     }
-    class Student implements Comparable<Student> {
+    public class Student implements Comparable<Student> {
         String name;
-        int course;
+        public int course;
 
         public Student(String name, int course) {
             this.name = name;
