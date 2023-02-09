@@ -3,7 +3,7 @@ package lessonTelRan.lesson13.graphWithList;
 import java.util.ArrayList;
 import java.util.List;
 
-// Класс для представления graph-ического объекта
+// Класс для представления graph-фического объекта
 public class Graph {
     // Список списков для представления списка смежности
     List<List<Node>> adjList = new ArrayList<>();
