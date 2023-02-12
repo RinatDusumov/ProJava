@@ -8,19 +8,44 @@ import java.util.TreeSet;
 public class UserMain {
     static Random random = new Random();
     public static void main(String[] args) {
-        // task 1
+        /**
+         * Task 1
+         * Напишите метод, который получает на вход Map и возвращает Map, где ключи и значения поменяны местами.
+         * Так как значения могут совпадать, то тип значения в Map будет уже не K, а Collection: Map> */
         HashMap<Integer, String> map = new HashMap<>();
-        HashMap<String, Integer> revMap = (HashMap<String, Integer>) collectionMap(map);
+        map.put(33, "Polina");
+        map.put(21, "Alina");
+        map.put(20, "Sofia");
+        HashMap<? extends String, ? extends Integer> revMap = (HashMap<String, Integer>) collectionMap(map);
+        System.out.println("Task 1: " + revMap);
 
-        // task 2
+        /**
+         * Task 2
+         * Напишите метод, который получает на вход массив элементов типа К (используйте Generic)
+         * и возвращает Map, где K — значение из массива, а Integer — количество вхождений в массив.
+         * То есть сигнатура метода выглядит так: Map arrayToMap(TypeK[] array);
+         */
         String[] array = {"dfs", "sdve", "wefwe"};
-        Map<String, Object> arrayMap = arrayInMap(array);
+        Map<String, ? extends Object> arrayMap = arrayInMap(array);
+        System.out.println("Task 2: " + arrayMap);
 
-        // task 3
+        /**
+         * Task 3
+         * Создайте класс HeavyBox, содержащий несколько параметров (длина, высота, ширина, вес).
+         *     Создать TreeSet содержащий HeavyBox.
+         *     HeavyBox должен реализовать интерфейс Comparable.
+         *     Распечатать содержимое с помощью for each.
+         */
         TreeSet treeSet = new TreeSet<>();
-        for (int i = 0; i < 5; i++) {
-            treeSet.add(new HeavyBox(random.nextInt(50), random.nextInt(50),
-                    random.nextInt(50), random.nextInt(50)));
+        treeSet.add(new HeavyBox(random.nextInt(30), random.nextInt(30),
+                random.nextInt(30), random.nextInt(30)));
+        treeSet.add(new HeavyBox(random.nextInt(30), random.nextInt(30),
+                random.nextInt(30), random.nextInt(30)));
+        treeSet.add(new HeavyBox(random.nextInt(30), random.nextInt(30),
+                random.nextInt(30), random.nextInt(30)));
+        System.out.println("Task 3:");
+        for (Object set : treeSet) {
+            System.out.println(set);
         }
     }
     public static <K, V> Map<V, K> collectionMap (Map<K, V> map) {

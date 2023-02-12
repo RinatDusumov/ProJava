@@ -37,6 +37,6 @@ public class HeavyBox implements Comparable<HeavyBox> {
 
     @Override
     public int compareTo(HeavyBox o) {
-        return this.height - o.height;
+        return this.length - o.length;
     }
 }
