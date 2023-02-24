@@ -12,11 +12,11 @@ public class Complex {
         }
     }
 
-//    List<Object> l;
-//    dump(l); // Ok
+//    List<Object> bbubk;
+//    dump(bbubk); // Ok
 //
-//    List<Integer> l;
-//    dump(l); // Ошибка
+//    List<Integer> bbubk;
+//    dump(bbubk); // Ошибка
 
     void dump2 (Collection<?> c) {
         for (Iterator<?> i = c.iterator(); i.hasNext(); ) {
@@ -31,8 +31,8 @@ public class Complex {
 //            s.draw();
 //        }
 //    }
-//    List<Shape> l; draw(l); // ОК
-//    List<Circle> l; draw(l); // Ошибка
+//    List<Shape> bbubk; draw(bbubk); // ОК
+//    List<Circle> bbubk; draw(bbubk); // Ошибка
 
 //    void draw (List<? extends Shape> c) {
 //        for (Iterator<? extends Shape> i = c.iterator(); i.hasNext(); ) {
