@@ -9,8 +9,8 @@ public class Main {
         /** Task 1
          Дан набор строк, посчитать количество разных букв во всех
          строках с использованием StreamAPI. */
-        String[] anArrayOfLetters = enteringStrings();
-        searchForLetters(anArrayOfLetters);
+//        String[] anArrayOfLetters = enteringStrings();
+//        searchForLetters(anArrayOfLetters);
 
         /** Task 2
          Для любого набора случайно-сгенерированных чисел нужно
@@ -77,11 +77,13 @@ public class Main {
         return set;
     }
     static void selection (Set<Employee> set) {
+        System.out.println();
         set.stream()
                 .filter(x -> x.getSurname().startsWith("J"))
                 .forEach(s -> System.out.print(s + ", "));
     }
     static void sortedLexicographically() {
+        System.out.println();
         String[] str = new String[]{"hello", "world", "aaa", "cvc"};
         Arrays.stream(str)
                 .sorted()
