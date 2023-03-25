@@ -1,10 +1,18 @@
 package lessonTelRan.lesson17.library;
 
-class AppLibrary {
+public class AppLibrary {
     public static void main(String[] args) {
         Library library = new Library();
 
-        System.out.println();
-        System.out.println();
+        LibraryUtils lUtils = new LibraryUtils();
+
+        lUtils.printBooks(lUtils.doWithLambda(library.getBooks()));
+
+        System.out.println("==================");
+
+        lUtils.printBooks(library.getBooks());
+
+//        System.out.println(library.getBooks());
+//        System.out.println(library.getReaders());
     }
 }

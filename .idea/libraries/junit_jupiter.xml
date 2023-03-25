@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="KotlinJavaRuntime" type="repository">
+  <library name="junit.jupiter" type="repository">
     <CLASSES />
     <JAVADOC />
     <SOURCES />
