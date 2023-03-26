@@ -16,7 +16,11 @@ class Employee {
         this.salary = salary;
         this.salaryDate = salaryDate;
     }
-    void writingToAFile(StringBuilder countingDown) throws FileNotFoundException {
+
+    public Employee() {
+    }
+
+    void writingToAFile(String countingDown) throws FileNotFoundException {
         File file = new File("testFile");
         PrintWriter pw = new PrintWriter(file);
         pw.println(countingDown);

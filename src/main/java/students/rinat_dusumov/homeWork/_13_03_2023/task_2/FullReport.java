@@ -13,12 +13,12 @@ public class FullReport {
 //        }
 //    }
     void generateFullReport(List<Employee> employees) throws FileNotFoundException {
-        StringBuilder countingDown = new StringBuilder();
-        Employee employee = new Employee(null,0.0, LocalDate.of(2023,03,15));
+        StringBuilder sb = new StringBuilder();
+        String countingDown = null;
+        Employee employee = new Employee();
         for (Employee emp : employees) {
-
-            countingDown.append("Имя сотрудника: " + emp.getFullName() + ", заработная плата составляет " +
-                            emp.getSalary() + " и дата выдачи - \n" + emp.getSalaryDate());
+            countingDown = String.valueOf(sb.append("Имя сотрудника: " + emp.getFullName() + ", заработная плата составляет " +
+                            emp.getSalary() + " и дата выдачи - " + emp.getSalaryDate() + "\n"));
         }
         employee.writingToAFile(countingDown);
     }
