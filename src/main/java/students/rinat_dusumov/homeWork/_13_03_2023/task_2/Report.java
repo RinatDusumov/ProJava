@@ -4,8 +4,8 @@ import java.util.List;
 class Report {
     void generateReport(List<Employee> employees) {
         for (Employee emp : employees) {
-            //System.out.printf("Имя сотрудника: %s, заработная плата - %.2f\n",
-                    //emp.getFullName(), emp.getSalary());
+            System.out.printf("Имя сотрудника: %s, заработная плата - %.2f\n",
+                    emp.getFullName(), emp.getSalary());
         }
     }
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 // Wildcards - супер карта
 /*
-    <? extends X> - класс X или любой его сабкласс (наследники)
+    <? extends X> - класс X или любой его субкласс (наследники)
     <? super Y> - класс Y или любой его суперкласс
  */
 public class Test3 {

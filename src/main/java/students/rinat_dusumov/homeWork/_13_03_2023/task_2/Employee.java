@@ -10,22 +10,18 @@ class Employee {
     private String fullName;
     private double salary;
     private LocalDate salaryDate;
-
     public Employee(String fullName, double salary, LocalDate salaryDate) {
         this.fullName = fullName;
         this.salary = salary;
         this.salaryDate = salaryDate;
     }
-
     public Employee() {
     }
-
     void writingToAFile(String countingDown) throws FileNotFoundException {
         File file = new File("testFile");
         PrintWriter pw = new PrintWriter(file);
         pw.println(countingDown);
         pw.close();
-
     }
     String getFullName() {
         return fullName;
@@ -33,11 +29,9 @@ class Employee {
     double getSalary() {
         return salary;
     }
-
     public LocalDate getSalaryDate() {
         return salaryDate;
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -45,12 +39,10 @@ class Employee {
         Employee employee = (Employee) o;
         return Double.compare(employee.salary, salary) == 0 && Objects.equals(fullName, employee.fullName);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(fullName, salary);
     }
-
     @Override
     public String toString() {
         return "Employee{" +

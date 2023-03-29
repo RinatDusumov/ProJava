@@ -3,7 +3,6 @@ package main.java.students.rinat_dusumov.homeWork._13_03_2023.task_2;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
-
 public class FullReport {
 //    void generateFullReport(List<Employee> employees) {
 //        for (Employee emp : employees) {
@@ -20,6 +19,7 @@ public class FullReport {
             countingDown = String.valueOf(sb.append("Имя сотрудника: " + emp.getFullName() + ", заработная плата составляет " +
                             emp.getSalary() + " и дата выдачи - " + emp.getSalaryDate() + "\n"));
         }
+//        System.out.println(countingDown);
         employee.writingToAFile(countingDown);
     }
 }
