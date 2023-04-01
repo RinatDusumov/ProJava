@@ -1,4 +1,4 @@
-package algorithms._27_01_2023;
+package algorithms._2023_01_27;
 
 /**
  * 

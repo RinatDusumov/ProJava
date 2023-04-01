@@ -1,4 +1,4 @@
-package algorithms._03_02_2023;
+package algorithms._2023_02_03;
 
 public class Eratosfen {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package algorithms._10_02_2023;
+package algorithms._2023_02_10;
 /** алгоритмы сжатия */
 
 

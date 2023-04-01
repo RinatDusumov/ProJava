@@ -1,4 +1,4 @@
-package algorithms._27_01_2023.fib;
+package algorithms._2023_01_27.fib;
 
 public class Fibonacci {
     // 0 1 2 3 5 8 13 21 34 55 ... каждое число это сумма двух предыдущих

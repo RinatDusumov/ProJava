@@ -1,4 +1,4 @@
-package algorithms._03_02_2023;
+package algorithms._2023_02_03;
 
 public class Min {
     public static void getMin(int[] arr) {

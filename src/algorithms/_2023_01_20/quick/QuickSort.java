@@ -1,5 +1,4 @@
-package algorithms._20_01_2023.quick;
-import java.util.Arrays;
+package algorithms._2023_01_20.quick;
 import java.util.Random;
 
 /* при делении на подмассивы нет выделения памяти

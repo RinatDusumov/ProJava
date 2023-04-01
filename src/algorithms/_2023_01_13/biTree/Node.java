@@ -1,4 +1,4 @@
-package algorithms._13_01_2023.biTree;
+package algorithms._2023_01_13.biTree;
 
 public class Node {
     public Integer value;
