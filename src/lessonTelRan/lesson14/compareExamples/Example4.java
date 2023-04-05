@@ -35,7 +35,7 @@ class Pair implements Comparable<Pair> {
 
     @Override
     public String toString() {
-        return "Pair{" +
+        return "PairInteger{" +
                 "x='" + x + '\'' +
                 ", y=" + y +
                 '}';
