@@ -10,20 +10,26 @@ class Roots {
     }
 
     public Double getX1() {
+
         return x1;
     }
 
     public Double getX2() {
+
         return x2;
     }
 
     public Roots(Double x1) {
+
         this.x1 = x1;
     }
-
     @Override
     public String toString() {
+        if (x2 == null) {
+            return "x1 = " + x1;
+        }
         return "x1 = " + x1 +
                 ", x2 = " + x2;
     }
+
 }
