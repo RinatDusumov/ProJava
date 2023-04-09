@@ -1,4 +1,4 @@
-package testing.module_1.task_2;
+package javaProTesting.module_1.task_2;
 
 class Lizards implements Movement{
     @Override

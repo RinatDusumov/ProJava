@@ -1,4 +1,4 @@
-package testing.module_1.task_1;
+package javaProTesting.module_1.task_1;
 
 class Person {
     public static void main(String[] args) {

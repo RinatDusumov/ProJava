@@ -1,4 +1,4 @@
-package testing.module_1.task_1;
+package javaProTesting.module_1.task_1;
 
 class Manager extends Employee {
     @Override
