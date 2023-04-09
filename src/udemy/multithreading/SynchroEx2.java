@@ -8,6 +8,21 @@ package udemy.multithreading;
     Ключевое слово synchronized устанавливает замок для остальных потоков
     до завершения работы.
     //public synchronized void abc() {method body}
+
+    Понятие "Монитор" - это механизм, благодаря которому достигается
+    корректная работа при синхронизации. В Java у каждого класса и
+    объекта есть привязанный к нему монитор.
+    Синхронизация всегда по монитору.
+
+    Синхронизация блока кода по объекту
+    Пример блока:
+        static final Object lock = new Object(); // lock - замок
+        public void abc() {...
+            synchronized(lock) {
+            ...
+            }
+        }
+
  */
 public class SynchroEx2 {
     static int counter = 0;
