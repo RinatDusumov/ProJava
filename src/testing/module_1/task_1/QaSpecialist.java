@@ -1,4 +1,4 @@
-package testing.module_1;
+package testing.module_1.task_1;
 
 class QaSpecialist extends Employee {
     @Override
