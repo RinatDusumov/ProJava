@@ -3,17 +3,15 @@ package javaProTesting.module_2.task_1;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
-public class TranslatorDemo {
+class TranslatorDemo {
     static TranslatorDemo translatorDemo = new TranslatorDemo();
     Map<String, String> dictionary = new TreeMap<>();
     static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
         translatorDemo.dictionary.put("Word", "Слово");
-        //String userChoice;
         do {
             translatorDemo.wordInput();
             System.out.println("Будете продолжать? Напишите yes или no.");
-            //userChoice = scanner.next();
         } while (scanner.next().equalsIgnoreCase("yes"));
     }
 
