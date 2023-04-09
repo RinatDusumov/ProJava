@@ -12,10 +12,7 @@ class Doctor_Is_Appointment_Demo {
     private static Queue<Person> queueToTheDoctor = new ArrayDeque<>();
     static Scanner scr = new Scanner(System.in);
     public static void main(String[] args) {
-        //dataInput();
-        Pattern p = Pattern.compile("[a-zA-Z0-9]+[^&\\?]");
-        Matcher matcher = p.matcher("one!Two@Three?Four");
-        System.out.println(matcher.matches());
+        dataInput();
 
     }
     static void dataInput() {
