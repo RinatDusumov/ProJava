@@ -8,8 +8,8 @@ class Wharf implements Runnable {
     private static final Object lock = new Object();
     private static final Scanner scr = new Scanner(System.in);
     private final Map<Integer, Integer> accounting = new HashMap<>();
-    private Map<Integer,Integer> forLoading = new HashMap<>();
-    private Map<Integer,Integer> forUnloading = new HashMap<>();
+    private Map<Integer, Integer> forLoading = new HashMap<>();
+    private Map<Integer, Integer> forUnloading = new HashMap<>();
     private int sumNumberOfContainers = 0;
     private int sumWeightOfContainers = 0;
     private int numberOfGroups;
@@ -82,7 +82,7 @@ class Wharf implements Runnable {
             int carryingCapacity = obtaining_maximum_load_capacity();
             classification_of_containers();
             PortDemo.getAllShipsOnTheMoorings().add(new MerchantShip(shipName, carryingCapacity,
-                    getAccounting(), sumNumberOfContainers, sumWeightOfContainers, forUnloading,forLoading,
+                    getAccounting(), sumNumberOfContainers, sumWeightOfContainers, forUnloading, forLoading,
                     unloadingContainers, containersOfLoading));
             System.out.println("Торговое судно - " + shipName + " зарегистрировано и ожидает на причале " +
                     Thread.currentThread().getName());
@@ -90,6 +90,7 @@ class Wharf implements Runnable {
 
         }
     }
+
     void distribution() {
         for (MerchantShip merchantShip : PortDemo.getAllShipsOnTheMoorings()) {
 //            if (merchantShip.getTotalNumberOfContainers() > 0) {
@@ -100,12 +101,10 @@ class Wharf implements Runnable {
 //            }
             Thread unloadingThread = new Thread(new UnloadingThread());
             Thread loadingThread = new Thread(new LoadingThread());
-            if (merchantShip.getUnloadingContainers() > 0) {
-                unloadingThread.start();
-            }
-            if (merchantShip.getContainersOfLoading() > 0) {
-                loadingThread.start();
-            }
+
+            unloadingThread.start();
+            loadingThread.start();
+
         }
     }
 

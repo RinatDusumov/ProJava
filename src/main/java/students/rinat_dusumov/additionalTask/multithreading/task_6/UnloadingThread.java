@@ -5,6 +5,7 @@ import java.util.Map;
 public class UnloadingThread implements Runnable{
     private static final Wharf wharf = new Wharf();
     private static final Object lock_2 = new Object();
+    private final LoadingThread loading = new LoadingThread();
     @Override
     public void run() {
         unloading();
@@ -23,6 +24,9 @@ public class UnloadingThread implements Runnable{
                                 wharf.availabilityControl();
                             }
                         }
+                    }
+                    if (merchantShip.getContainersOfLoading() > 0) {
+                        loading.loading();
                     }
                 }
             }
