@@ -15,6 +15,7 @@ class DualThreadProcessing implements Runnable {
     public static void main(String[] args) {
         Thread thread = new Thread(new DualThreadProcessing());
         thread.start();
+
         user_specified = elementInputFromUser();
         resultOutput(user_specified, count);
     }
