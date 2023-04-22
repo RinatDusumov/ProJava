@@ -16,30 +16,25 @@ import java.util.Map;
  */
 class PortDemo {
     private static final Map<Integer, Integer> cargoTerminalCapacity = new HashMap<>(); // вес и количество по лимиту на терминале
-    private static volatile Map<Integer, Integer> amountOfFreeSpace = new HashMap<>(); // свободное место
+    static volatile Map<Integer, Integer> amountOfFreeSpace = new HashMap<>(); // свободное место
     private static volatile List<MerchantShip> allShipsOnTheMoorings = new LinkedList<>(); // все корабли на причалах
     private static volatile Map<Integer, Integer> stockAvailability = new HashMap<>(); // занятых мест на складе
 
     static Map<Integer, Integer> getStockAvailability() {
+
         return stockAvailability;
     }
 
-    static void setStockAvailability(Map<Integer, Integer> stockAvailability) {
-        PortDemo.stockAvailability = stockAvailability;
-    }
-
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Thread wharf_1 = new Thread(new Wharf(), "Wharf_1");
         Thread wharf_2 = new Thread(new Wharf(), "Wharf_2");
         Thread wharf_3 = new Thread(new Wharf(), "Wharf_3");
-        cargoTerminalCapacity.put(1_500, 10_000);
-        cargoTerminalCapacity.put(5_000, 15_000);
-        cargoTerminalCapacity.put(10_000, 14_500);
-        cargoTerminalCapacity.put(20_000, 13_000);
+        cargoTerminalCapacity.put(1500, 100_000);
+        cargoTerminalCapacity.put(5000, 100_000);
+        cargoTerminalCapacity.put(3000, 100_000);
+        cargoTerminalCapacity.put(10000, 100_000);
 
-        for (Map.Entry<Integer, Integer> terminalLimit : cargoTerminalCapacity.entrySet()) {
-            amountOfFreeSpace.put(terminalLimit.getKey(), terminalLimit.getValue());
-        }
+        amountOfFreeSpace.putAll(cargoTerminalCapacity);
         wharf_1.start();
         wharf_2.start();
         wharf_3.start();

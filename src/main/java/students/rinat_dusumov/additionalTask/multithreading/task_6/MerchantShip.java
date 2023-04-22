@@ -1,50 +1,31 @@
 package main.java.students.rinat_dusumov.additionalTask.multithreading.task_6;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
 class MerchantShip {
     private final String shipName;
     private final int carryingCapacity; // грузоподъёмность (kg)
-    private Map<Integer, Integer> containerAccounting; // вес и количество контейнеров на корабле
-    private volatile Map<Integer,Integer> accountingOfContainersForUnloading;
-    private volatile Map<Integer,Integer> accountingOfContainersForLoading;
+    private Map<Integer, Integer> containerAccounting = new HashMap<>(); // вес и количество контейнеров на корабле
     private int totalNumberOfContainers; // общее количество
     private int totalWeightOfContainers; // общий вес
-    private final int unloadingContainers;
-    private final int containersOfLoading;
-
-    public int getUnloadingContainers() {
-        return unloadingContainers;
-    }
-
-    public int getContainersOfLoading() {
-        return containersOfLoading;
-    }
-
-    Map<Integer, Integer> getAccountingOfContainersForUnloading() {
-        return accountingOfContainersForUnloading;
-    }
-
-    Map<Integer, Integer> getAccountingOfContainersForLoading() {
-        return accountingOfContainersForLoading;
-    }
-
     public MerchantShip(String shipName, int carryingCapacity,
-                        Map<Integer, Integer> containerAccounting, int totalNumberOfContainers,
-                        int totalWeightOfContainers,
-                        Map<Integer,Integer> accountingOfContainersForUnloading,
-                        Map<Integer,Integer> accountingOfContainersForLoading, int unloadingContainers,
-                        int containersOfLoading) {
+                        int containerWeight, int numberOfContainers, int totalNumberOfContainers,
+                        int totalWeightOfContainers) {
         this.shipName = shipName;
         this.carryingCapacity = carryingCapacity;
-        this.containerAccounting = containerAccounting;
+        this.containerAccounting.put(containerWeight, numberOfContainers);
         this.totalNumberOfContainers = totalNumberOfContainers;
         this.totalWeightOfContainers = totalWeightOfContainers;
-        this.accountingOfContainersForLoading = accountingOfContainersForLoading;
-        this.accountingOfContainersForUnloading = accountingOfContainersForUnloading;
-        this.unloadingContainers = unloadingContainers;
-        this.containersOfLoading = containersOfLoading;
+    }
+
+    public String getShipName() {
+        return shipName;
+    }
+
+    public void setContainerAccounting(Map<Integer, Integer> containerAccounting) {
+        this.containerAccounting = containerAccounting;
     }
 
     void setTotalNumberOfContainers(int totalNumberOfContainers) {
