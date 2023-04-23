@@ -16,11 +16,8 @@ import java.util.Map;
  */
 class PortDemo {
     private static final Map<Integer, Integer> cargoTerminalCapacity = new HashMap<>(); // вес и количество по лимиту на терминале
-    static volatile Map<Integer, Integer> amountOfFreeSpace = new HashMap<>(); // свободное место
-    private static final List<MerchantShip> allShipsOnTheMoorings = new LinkedList<>(); // все корабли на причалах
-    static volatile Map<Integer, Integer> stockAvailability = new HashMap<>(); // занятых мест на складе
-
-    static Map<Integer, Integer> getStockAvailability() {
+    static volatile Map<Integer, Integer> stockAvailability = new HashMap<>(); // наличие на складе на складе
+    public static Map<Integer, Integer> getStockAvailability() {
         return stockAvailability;
     }
 
@@ -32,27 +29,19 @@ class PortDemo {
         cargoTerminalCapacity.put(5000, 100_000);
         cargoTerminalCapacity.put(3000, 100_000);
         cargoTerminalCapacity.put(10000, 100_000);
-
-        amountOfFreeSpace.putAll(cargoTerminalCapacity);
+        stockAvailability.put(1500,0);
+        stockAvailability.put(3000,0);
+        stockAvailability.put(5000,0);
+        stockAvailability.put(10000,0);
         wharf_1.start();
-//        wharf_2.start();
-//        wharf_3.start();
+        wharf_2.start();
+        wharf_3.start();
         wharf_1.join();
         wharf_2.join();
         wharf_3.join();
 
-        System.out.println("Итог: свободных мест - " + amountOfFreeSpace);
-    }
-
-    static Map<Integer, Integer> getCargoTerminalCapacity() {
-        return cargoTerminalCapacity;
-    }
-
-    static Map<Integer, Integer> getAmountOfFreeSpace() {
-        return amountOfFreeSpace;
-    }
-
-    static List<MerchantShip> getAllShipsOnTheMoorings() {
-        return allShipsOnTheMoorings;
+        for (int i = 0; i < getStockAvailability().size(); i++) {
+            System.out.println(getStockAvailability().get(i));
+        }
     }
 }

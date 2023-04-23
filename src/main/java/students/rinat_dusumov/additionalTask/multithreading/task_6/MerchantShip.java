@@ -6,65 +6,39 @@ import java.util.Objects;
 
 class MerchantShip {
     private final String shipName;
+    private final String nameThread;
     private final int carryingCapacity; // грузоподъёмность (kg)
-    private Map<Integer, Integer> containerAccounting = new HashMap<>(); // вес и количество контейнеров на корабле
-    private final Map<Integer, Integer> forDownload = new HashMap<>();
-    private final Map<Integer,Integer> forUnloading = new HashMap<>();
-    private int totalNumberOfContainers; // общее количество
-    private int totalWeightOfContainers; // общий вес
+    private Map<Integer, Integer> presenceOnTheVessel = new HashMap<>(); // наличие на судне
+    private final int totalNumberOfContainers; // общее количество
+    private final int totalWeightOfContainers; // общий вес
 
-    public Map<Integer, Integer> getForDownload() {
-        return forDownload;
+    public String getNameThread() {
+        return nameThread;
     }
 
-    public Map<Integer, Integer> getForUnloading() {
-        return forUnloading;
-    }
-
-    public MerchantShip(String shipName, int carryingCapacity,
-                        int containerWeight, int numberOfContainers, int totalNumberOfContainers,
-                        int totalWeightOfContainers, int forDownloadKey, int forDownloadValue,
-                        int forUnloadingKey, int forUnloadingValue) {
-        this.shipName = shipName;
-        this.carryingCapacity = carryingCapacity;
-        this.containerAccounting.put(containerWeight, numberOfContainers);
-        this.totalNumberOfContainers = totalNumberOfContainers;
-        this.totalWeightOfContainers = totalWeightOfContainers;
-        this.forDownload.put(forDownloadKey,forDownloadValue);
-        this.forUnloading.put(forUnloadingKey, forUnloadingValue);
-    }
-
-    public String getShipName() {
-        return shipName;
-    }
-
-    public void setContainerAccounting(Map<Integer, Integer> containerAccounting) {
-        this.containerAccounting = containerAccounting;
-    }
-
-    void setTotalNumberOfContainers(int totalNumberOfContainers) {
-        this.totalNumberOfContainers = totalNumberOfContainers;
-    }
-
-    void setTotalWeightOfContainers(int totalWeightOfContainers) {
-        this.totalWeightOfContainers = totalWeightOfContainers;
-    }
-
-    int getTotalWeightOfContainers() {
-        return totalWeightOfContainers;
-    }
-
-    int getCarryingCapacity() {
+    public int getCarryingCapacity() {
         return carryingCapacity;
     }
 
-    Map<Integer, Integer> getContainerAccounting() {
-        return containerAccounting;
+    public int getTotalWeightOfContainers() {
+        return totalWeightOfContainers;
     }
 
-    int getTotalNumberOfContainers() {
-        return totalNumberOfContainers;
+    Map<Integer, Integer> getPresenceOnTheVessel() {
+        return presenceOnTheVessel;
     }
+
+    public MerchantShip(String nameThread, String shipName, int carryingCapacity,
+                        int key, int value, int totalNumberOfContainers,
+                        int totalWeightOfContainers) {
+        this.nameThread = nameThread;
+        this.shipName = shipName;
+        this.carryingCapacity = carryingCapacity;
+        this.presenceOnTheVessel.put(key, value);
+        this.totalNumberOfContainers = totalNumberOfContainers;
+        this.totalWeightOfContainers = totalWeightOfContainers;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -84,7 +58,7 @@ class MerchantShip {
         return "MerchantShip{" +
                 "shipName='" + shipName + '\'' +
                 ", carryingCapacity=" + carryingCapacity +
-                ", containerAccounting=" + containerAccounting +
+                ", containerAccounting=" + presenceOnTheVessel +
                 ", totalNumberOfContainers=" + totalNumberOfContainers +
                 ", totalWeightOfContainers=" + totalWeightOfContainers +
                 '}';
