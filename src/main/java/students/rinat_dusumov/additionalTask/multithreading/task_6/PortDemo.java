@@ -17,11 +17,10 @@ import java.util.Map;
 class PortDemo {
     private static final Map<Integer, Integer> cargoTerminalCapacity = new HashMap<>(); // вес и количество по лимиту на терминале
     static volatile Map<Integer, Integer> amountOfFreeSpace = new HashMap<>(); // свободное место
-    private static volatile List<MerchantShip> allShipsOnTheMoorings = new LinkedList<>(); // все корабли на причалах
-    private static volatile Map<Integer, Integer> stockAvailability = new HashMap<>(); // занятых мест на складе
+    private static final List<MerchantShip> allShipsOnTheMoorings = new LinkedList<>(); // все корабли на причалах
+    static volatile Map<Integer, Integer> stockAvailability = new HashMap<>(); // занятых мест на складе
 
     static Map<Integer, Integer> getStockAvailability() {
-
         return stockAvailability;
     }
 
@@ -36,8 +35,13 @@ class PortDemo {
 
         amountOfFreeSpace.putAll(cargoTerminalCapacity);
         wharf_1.start();
-        wharf_2.start();
-        wharf_3.start();
+//        wharf_2.start();
+//        wharf_3.start();
+        wharf_1.join();
+        wharf_2.join();
+        wharf_3.join();
+
+        System.out.println("Итог: свободных мест - " + amountOfFreeSpace);
     }
 
     static Map<Integer, Integer> getCargoTerminalCapacity() {

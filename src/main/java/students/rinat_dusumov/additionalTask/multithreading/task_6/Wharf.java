@@ -8,78 +8,33 @@ class Wharf implements Runnable {
     private static final Object lock = new Object();
     private static final Scanner scr = new Scanner(System.in);
     private final Map<Integer, Integer> accounting = new HashMap<>();
+    private final Map<Integer, Integer> forDownload = new HashMap<>();
+    private final Map<Integer, Integer> forUnloading = new HashMap<>();
     private int sumNumberOfContainers = 0;
     private int sumWeightOfContainers = 0;
+
 
     @Override
     public void run() {
         registration();
     }
 
-    void unloading(MerchantShip merchantShip) {
-        for (Map.Entry<Integer, Integer> entryMerchantShip : merchantShip.getContainerAccounting().entrySet()) {
-            for (Map.Entry<Integer, Integer> freePlace : PortDemo.getAmountOfFreeSpace().entrySet()) {
-                if (entryMerchantShip.getKey().equals(freePlace.getKey()) &&
-                        entryMerchantShip.getValue() < freePlace.getValue()) {
-                    controlOfAvailabilityOfPlacesDuringUnloading(freePlace, entryMerchantShip);
-                    entryMerchantShip.setValue(0);
-                }
-            }
-        }
-    }
-
-    void controlOfAvailabilityOfPlacesDuringUnloading(Map.Entry<Integer, Integer> freePlace,
-                                                      Map.Entry<Integer, Integer> entryMerchantShip) {
+    void unloading(MerchantShip merchantShip, Map.Entry<Integer, Integer> forUnloading) {
         synchronized (lock) {
-            if (PortDemo.amountOfFreeSpace.containsKey(freePlace.getKey())) {
-                PortDemo.amountOfFreeSpace.put(freePlace.getKey(), freePlace.getValue() - entryMerchantShip.getValue());
-
-                for (Map.Entry<Integer, Integer> terminalLimit : PortDemo.getCargoTerminalCapacity().entrySet()) {
-                    for (Map.Entry<Integer, Integer> inStock : PortDemo.getStockAvailability().entrySet()) {
-                        if (terminalLimit.getKey().equals(inStock.getKey())) {
-                            inStock.setValue(terminalLimit.getValue() - freePlace.getValue());
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    void monitoringTheAvailabilityOfSeatsWhenLoading(Map.Entry<Integer, Integer> inStock,
-                                                     Map.Entry<Integer, Integer> cargo_for_loading) {
-        synchronized (lock) {
-            if (cargo_for_loading.getKey().equals(inStock.getKey())) {
-                inStock.setValue(inStock.getValue() + cargo_for_loading.getValue());
-                for (Map.Entry<Integer, Integer> terminalLimit : PortDemo.getCargoTerminalCapacity().entrySet()) {
-                    for (Map.Entry<Integer, Integer> freePlace : PortDemo.getAmountOfFreeSpace().entrySet()) {
-                        if (terminalLimit.getKey().equals(inStock.getKey())) {
-                            freePlace.setValue(terminalLimit.getValue() - inStock.getValue());
-                            System.out.println(PortDemo.amountOfFreeSpace);
-                        }
-                    }
-                }
-            }
-        }
-    }
-    void loading(MerchantShip merchantShip) {
-        // сколько нужно загрузить
-        synchronized (this) {
-            classificationOfContainers();
-            merchantShip.setTotalNumberOfContainers(sumNumberOfContainers);
-            merchantShip.setTotalWeightOfContainers(sumWeightOfContainers);
-        }
-
-        if (merchantShip.getTotalWeightOfContainers() <= merchantShip.getCarryingCapacity()) {
             for (Map.Entry<Integer, Integer> entryMerchantShip : merchantShip.getContainerAccounting().entrySet()) {
-                for (Map.Entry<Integer, Integer> inStock : PortDemo.getStockAvailability().entrySet()) {
-                    for (Map.Entry<Integer, Integer> cargo_for_loading : accounting.entrySet()) { // груз для загрузки
-                        if (entryMerchantShip.getKey().equals(cargo_for_loading.getKey()) &&
-                                cargo_for_loading.getValue() <= inStock.getValue()) {
-                            do {
-                                entryMerchantShip.setValue(entryMerchantShip.getValue() + cargo_for_loading.getValue());
-                                monitoringTheAvailabilityOfSeatsWhenLoading(inStock, cargo_for_loading);
-                            } while (merchantShip.getTotalWeightOfContainers() <= merchantShip.getCarryingCapacity());
-                            System.out.println("Судно загружено");
+                for (Map.Entry<Integer, Integer> freePlace : PortDemo.getAmountOfFreeSpace().entrySet()) {
+                    if ((forUnloading.getKey().equals(freePlace.getKey()) &&
+                            forUnloading.getValue() < freePlace.getValue()) &&
+                            forUnloading.getKey().equals(entryMerchantShip.getKey())) {
+                        PortDemo.amountOfFreeSpace.put(freePlace.getKey(), freePlace.getValue() - forUnloading.getValue());
+                        entryMerchantShip.setValue(entryMerchantShip.getValue() - forUnloading.getValue());
+                        for (Map.Entry<Integer, Integer> terminalLimit : PortDemo.getCargoTerminalCapacity().entrySet()) {
+                            for (Map.Entry<Integer, Integer> inStock : PortDemo.getStockAvailability().entrySet()) {
+                                if (terminalLimit.getKey().equals(inStock.getKey())) {
+                                    PortDemo.stockAvailability.put(inStock.getKey(), terminalLimit.getValue() -
+                                            freePlace.getValue());
+                                }
+                            }
                         }
                     }
                 }
@@ -87,14 +42,37 @@ class Wharf implements Runnable {
         }
     }
 
-    synchronized void registration() {
+    void loading(MerchantShip merchantShip, Map.Entry<Integer, Integer> forDownload) {
+        synchronized (lock) {
+            if (merchantShip.getTotalWeightOfContainers() <= merchantShip.getCarryingCapacity()) {
+                for (Map.Entry<Integer, Integer> entryMerchantShip : merchantShip.getContainerAccounting().entrySet()) {
+                    for (Map.Entry<Integer, Integer> inStock : PortDemo.getStockAvailability().entrySet()) {
+                        if ((inStock.getKey().equals(forDownload.getKey()) &&
+                                forDownload.getValue() <= inStock.getValue()) &&
+                                forDownload.getKey().equals(entryMerchantShip.getKey())) {
+                            PortDemo.stockAvailability.put(inStock.getKey(), inStock.getValue() + forDownload.getValue());
+                            entryMerchantShip.setValue(entryMerchantShip.getValue() + forDownload.getValue());
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    void registration() {
         synchronized (lock) {
             String shipName = getting_a_name();
             int carryingCapacity = obtaining_maximum_load_capacity();
             classificationOfContainers();
             for (Map.Entry<Integer, Integer> account : accounting.entrySet()) {
-                PortDemo.getAllShipsOnTheMoorings().add(new MerchantShip(shipName, carryingCapacity,
-                        account.getKey(), account.getValue(), sumNumberOfContainers, sumWeightOfContainers));
+                for (Map.Entry<Integer, Integer> forDownload : forDownload.entrySet()) {
+                    for (Map.Entry<Integer, Integer> forUnloading : forUnloading.entrySet()) {
+                        PortDemo.getAllShipsOnTheMoorings().add(new MerchantShip(shipName, carryingCapacity,
+                                account.getKey(), account.getValue(), sumNumberOfContainers,
+                                sumWeightOfContainers, forDownload.getKey(), forDownload.getValue(),
+                                forUnloading.getKey(), forUnloading.getValue()));
+                    }
+                }
             }
             System.out.println("Торговое судно - " + shipName + " зарегистрировано и ожидает на причале " +
                     Thread.currentThread().getName());
@@ -104,13 +82,16 @@ class Wharf implements Runnable {
 
     void distribution() {
         for (MerchantShip merchantShip : PortDemo.getAllShipsOnTheMoorings()) {
-                if (merchantShip.getTotalNumberOfContainers() > 0) {
-                    unloading(merchantShip);
+            for (Map.Entry<Integer, Integer> unloading : merchantShip.getForUnloading().entrySet()) {
+                if (unloading.getValue() > 0) {
+                    unloading(merchantShip, unloading);
                 }
-                if (merchantShip.getTotalNumberOfContainers() == 0) {
-                    loading(merchantShip);
+            }
+            for (Map.Entry<Integer, Integer> download : merchantShip.getForDownload().entrySet()) {
+                if (download.getValue() > 0) {
+                    loading(merchantShip, download);
                 }
-
+            }
         }
     }
 
@@ -122,9 +103,15 @@ class Wharf implements Runnable {
             containerWeight = scr.nextInt();
             System.out.println("Количество контейнеров на судне в указанной выше группе?");
             numberOfContainers = scr.nextInt();
+            System.out.println("Укажите количество контейнеров для разгрузки");
+            int quantityForUnloading = scr.nextInt();
+            System.out.println("Укажите количество контейнеров для загрузки");
+            int quantityToDownload = scr.nextInt();
             accounting.put(containerWeight, numberOfContainers);
             sumNumberOfContainers += numberOfContainers;
             sumWeightOfContainers += (containerWeight * numberOfContainers);
+            forDownload.put(containerWeight, quantityToDownload);
+            forUnloading.put(containerWeight, quantityForUnloading);
         }
     }
 

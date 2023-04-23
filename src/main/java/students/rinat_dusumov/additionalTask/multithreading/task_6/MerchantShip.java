@@ -8,16 +8,30 @@ class MerchantShip {
     private final String shipName;
     private final int carryingCapacity; // грузоподъёмность (kg)
     private Map<Integer, Integer> containerAccounting = new HashMap<>(); // вес и количество контейнеров на корабле
+    private final Map<Integer, Integer> forDownload = new HashMap<>();
+    private final Map<Integer,Integer> forUnloading = new HashMap<>();
     private int totalNumberOfContainers; // общее количество
     private int totalWeightOfContainers; // общий вес
+
+    public Map<Integer, Integer> getForDownload() {
+        return forDownload;
+    }
+
+    public Map<Integer, Integer> getForUnloading() {
+        return forUnloading;
+    }
+
     public MerchantShip(String shipName, int carryingCapacity,
                         int containerWeight, int numberOfContainers, int totalNumberOfContainers,
-                        int totalWeightOfContainers) {
+                        int totalWeightOfContainers, int forDownloadKey, int forDownloadValue,
+                        int forUnloadingKey, int forUnloadingValue) {
         this.shipName = shipName;
         this.carryingCapacity = carryingCapacity;
         this.containerAccounting.put(containerWeight, numberOfContainers);
         this.totalNumberOfContainers = totalNumberOfContainers;
         this.totalWeightOfContainers = totalWeightOfContainers;
+        this.forDownload.put(forDownloadKey,forDownloadValue);
+        this.forUnloading.put(forUnloadingKey, forUnloadingValue);
     }
 
     public String getShipName() {
