@@ -79,7 +79,7 @@ public class VesselRegistration {
     Map<Integer,Integer> gettingDataToLoad () {
         synchronized (lock) {
             Map<Integer, Integer> forDownload = new HashMap<>();
-            System.out.println("Данные для загрузки");
+            System.out.println("Данные для загрузки:");
             int containerWeight = weightInput();
             System.out.print("Для загрузки - ");
             int quantityToDownload = scr.nextInt();

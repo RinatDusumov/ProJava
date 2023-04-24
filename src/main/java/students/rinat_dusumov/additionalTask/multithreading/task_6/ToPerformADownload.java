@@ -19,8 +19,12 @@ public class ToPerformADownload implements Runnable {
         boolean isTheProductInStock = plannedWorks.checkForThePresenceOfCargo(forDownload);
         if (isTheProductInStock) {
             for (MerchantShip merchantShip : listOfShips) {
-                plannedWorks.loading(merchantShip, forDownload);
-                plannedWorks.reductionOfGoodsInStock(forDownload);
+                if (merchantShip.getTotalWeightAfterLoading() <= merchantShip.getCarryingCapacity()) {
+                    plannedWorks.loading(merchantShip, forDownload);
+                    plannedWorks.reductionOfGoodsInStock(forDownload);
+                } else {
+                    System.out.println("Грузоподъёмность была превышена!");
+                }
             }
         }
     }

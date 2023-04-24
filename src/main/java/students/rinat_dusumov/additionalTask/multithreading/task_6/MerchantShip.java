@@ -40,7 +40,7 @@ public class MerchantShip {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MerchantShip that = (MerchantShip) o;
+        main.java.students.rinat_dusumov.additionalTask.multithreading.task_6.MerchantShip that = (main.java.students.rinat_dusumov.additionalTask.multithreading.task_6.MerchantShip) o;
         return carryingCapacity == that.carryingCapacity && totalNumberOfContainers == that.totalNumberOfContainers &&
                 totalWeightOfContainers == that.totalWeightOfContainers && Objects.equals(shipName, that.shipName) &&
                 Objects.equals(nameThread, that.nameThread) && Objects.equals(presenceOnTheVessel, that.presenceOnTheVessel);

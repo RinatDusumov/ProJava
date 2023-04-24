@@ -55,11 +55,8 @@ public class PlannedWorks {
     void loading(MerchantShip merchantShip, Map<Integer, Integer> forDownload) {
         for (Map.Entry<Integer, Integer> ship : merchantShip.getPresenceOnTheVessel().entrySet()) {
             for (Map.Entry<Integer, Integer> download : forDownload.entrySet()) {
-                if (ship.getKey().equals(download.getKey()) && merchantShip.getTotalWeightAfterLoading() <=
-                        merchantShip.getCarryingCapacity()) {
+                if (ship.getKey().equals(download.getKey())) {
                     ship.setValue(ship.getValue() + download.getValue());
-                } else {
-                    System.out.println("Грузоподъёмность была превышена!");
                 }
             }
         }

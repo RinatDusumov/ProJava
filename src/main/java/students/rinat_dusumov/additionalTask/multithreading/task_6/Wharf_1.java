@@ -17,7 +17,7 @@ public class Wharf_1 implements Runnable{
         Map<Integer, Integer> forUnloading = null;
         Map<Integer, Integer> forDownload = null;
 
-        for (int i = 0; i < listOfShips.size(); i++) {
+        for (int i = 0; i < 4; i++) {
             forUnloading = vesselRegistration.receivingDataForOffloading();
             forDownload = vesselRegistration.gettingDataToLoad();
         }
