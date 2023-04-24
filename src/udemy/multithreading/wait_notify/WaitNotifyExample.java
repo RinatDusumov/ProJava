@@ -65,6 +65,7 @@ class Market {
 class Producer implements Runnable {
     Market market;
     Producer(Market market) {
+
         this.market = market;
     }
     public void run() {
@@ -76,6 +77,7 @@ class Producer implements Runnable {
 class Consumer implements Runnable {
     Market market;
     Consumer(Market market) {
+
         this.market = market;
     }
     public void run() {
