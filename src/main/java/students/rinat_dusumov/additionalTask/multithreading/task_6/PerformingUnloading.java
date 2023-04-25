@@ -1,24 +1,22 @@
 package main.java.students.rinat_dusumov.additionalTask.multithreading.task_6;
 
-import java.util.List;
 import java.util.Map;
 
 public class PerformingUnloading implements Runnable {
     PlannedWorks plannedWorks;
-    List<MerchantShip> listOfShips;
+    MerchantShip merchantShip;
     Map<Integer, Integer> forUnloading;
 
-    public PerformingUnloading(PlannedWorks plannedWorks, List<MerchantShip> listOfShips, Map<Integer, Integer> forUnloading) {
+    public PerformingUnloading(PlannedWorks plannedWorks, MerchantShip merchantShip, Map<Integer, Integer> forUnloading) {
         this.plannedWorks = plannedWorks;
-        this.listOfShips = listOfShips;
+        this.merchantShip = merchantShip;
         this.forUnloading = forUnloading;
     }
 
     @Override
     public void run() {
-        for (MerchantShip merchantShip : listOfShips) {
-            plannedWorks.unloading(merchantShip, forUnloading);
-            plannedWorks.increaseInGoodsInStock(forUnloading);
-        }
+        plannedWorks.unloading(merchantShip, forUnloading);
+        plannedWorks.increaseInGoodsInStock(forUnloading);
+
     }
 }

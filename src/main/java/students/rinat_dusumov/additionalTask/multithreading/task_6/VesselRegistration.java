@@ -7,8 +7,7 @@ public class VesselRegistration {
     private static final Scanner scr = new Scanner(System.in);
     private int sumNumberOfContainers = 0;
     private int sumWeightOfContainers = 0;
-    private int totalWeightAfterLoading = 0;
-    private int loadWeight = 0;
+    private volatile int loadWeight = 0;
 
     List<MerchantShip> registration() {
         synchronized (lock) {
@@ -19,7 +18,7 @@ public class VesselRegistration {
             List<MerchantShip> listOfShips = new LinkedList<>();
             listOfShips.add(new MerchantShip(Thread.currentThread().getName(),
                     shipName, carryingCapacity, goodsOnTheShip, sumNumberOfContainers,
-                    sumWeightOfContainers, totalWeightAfterLoading));
+                    sumWeightOfContainers));
 
             outputOfTheRegistrationResult(shipName, Thread.currentThread().getName());
 
@@ -47,7 +46,6 @@ public class VesselRegistration {
             countingTheTotalNumberOfContainers(numberOfContainers);
             calculationOfTheTotalWeightOfContainers(containerWeight, numberOfContainers);
         }
-        calculationOfTheTotalWeightAfterLoading ();
         return goodsOnTheShip;
     }
     private int weightInput() {
@@ -75,19 +73,20 @@ public class VesselRegistration {
             return forUnloading;
         }
     }
-    Map<Integer,Integer> gettingDataToLoad (Map<Integer, Integer> forDownload) {
+    Map<Integer,Integer> gettingDataToLoad (Map<Integer, Integer> forDownload, MerchantShip merchantShip) {
         synchronized (lock) {
-            System.out.println("Данные для загрузки:");
+            System.out.println("Данные для загрузки судна - " + merchantShip.getShipName());
             int containerWeight = weightInput();
             System.out.print("Для загрузки - ");
             int quantityToDownload = scr.nextInt();
             forDownload.put(containerWeight, quantityToDownload);
             loadWeight += (containerWeight * quantityToDownload);
+            calculationOfTheTotalWeightAfterLoading (merchantShip);
             return forDownload;
         }
     }
-    void calculationOfTheTotalWeightAfterLoading () {
-        totalWeightAfterLoading = sumWeightOfContainers + loadWeight;
+    void calculationOfTheTotalWeightAfterLoading (MerchantShip merchantShip) {
+        merchantShip.setTotalWeightAfterLoading(merchantShip.getTotalWeightOfContainers() + loadWeight);
     }
     void outputOfTheRegistrationResult (String shipName, String nameThread) {
         System.out.println("Торговое судно - " + shipName + ", зарегистрировано и ожидает на причале " +

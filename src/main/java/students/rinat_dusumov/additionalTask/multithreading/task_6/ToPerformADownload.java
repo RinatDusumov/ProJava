@@ -1,28 +1,34 @@
 package main.java.students.rinat_dusumov.additionalTask.multithreading.task_6;
 
-import java.util.List;
 import java.util.Map;
 
 public class ToPerformADownload implements Runnable {
     PlannedWorks plannedWorks;
-    List<MerchantShip> listOfShips;
+    MerchantShip merchantShip;
     Map<Integer, Integer> forDownload;
 
-    public ToPerformADownload(PlannedWorks plannedWorks, List<MerchantShip> listOfShips, Map<Integer, Integer> forDownload) {
+    public ToPerformADownload(PlannedWorks plannedWorks, MerchantShip merchantShip, Map<Integer, Integer> forDownload) {
         this.plannedWorks = plannedWorks;
-        this.listOfShips = listOfShips;
+        this.merchantShip = merchantShip;
         this.forDownload = forDownload;
     }
 
     @Override
     public void run() {
-        for (MerchantShip merchantShip : listOfShips) {
-            if (merchantShip.getTotalWeightAfterLoading() <= merchantShip.getCarryingCapacity()) {
-                plannedWorks.loading(merchantShip, forDownload);
-                plannedWorks.reductionOfGoodsInStock(forDownload);
-            } else {
-                System.out.println("Грузоподъёмность торгового судна - " + merchantShip.getShipName() + ", была превышена!");
+        forTheDownloadDepartment(merchantShip);
+    }
+
+    void forTheDownloadDepartment(MerchantShip merchantShip) {
+        if (merchantShip.getTotalWeightAfterLoading() <= merchantShip.getCarryingCapacity()) {
+            plannedWorks.loading(merchantShip, forDownload);
+            plannedWorks.reductionOfGoodsInStock(forDownload);
+        } else {
+            final VesselRegistration vesselRegistration = new VesselRegistration();
+            System.out.println("Грузоподъёмность торгового судна - " + merchantShip.getShipName() + ", была превышена!");
+            for (int i = 0; i < 4; i++) {
+                forDownload = vesselRegistration.gettingDataToLoad(forDownload, merchantShip);
             }
+            forTheDownloadDepartment(merchantShip);
         }
     }
 }

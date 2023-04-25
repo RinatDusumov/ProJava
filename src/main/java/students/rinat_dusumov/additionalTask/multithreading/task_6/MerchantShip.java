@@ -10,10 +10,18 @@ public class MerchantShip {
     private final Map<Integer, Integer> presenceOnTheVessel; // наличие на судне
     private final int totalNumberOfContainers; // общее количество
     private final int totalWeightOfContainers; // общий вес
-    private final int totalWeightAfterLoading;
+    private int totalWeightAfterLoading = 0;
 
     public String getShipName() {
         return shipName;
+    }
+
+    public int getTotalWeightOfContainers() {
+        return totalWeightOfContainers;
+    }
+
+    public void setTotalWeightAfterLoading(int totalWeightAfterLoading) {
+        this.totalWeightAfterLoading = totalWeightAfterLoading;
     }
 
     public int getCarryingCapacity() {
@@ -30,14 +38,13 @@ public class MerchantShip {
 
     public MerchantShip(String nameThread, String shipName, int carryingCapacity,
                         Map<Integer, Integer> presenceOnTheVessel, int totalNumberOfContainers,
-                        int totalWeightOfContainers, int totalWeightAfterLoading) {
+                        int totalWeightOfContainers) {
         this.shipName = shipName;
         this.nameThread = nameThread;
         this.carryingCapacity = carryingCapacity;
         this.presenceOnTheVessel = presenceOnTheVessel;
         this.totalNumberOfContainers = totalNumberOfContainers;
         this.totalWeightOfContainers = totalWeightOfContainers;
-        this.totalWeightAfterLoading = totalWeightAfterLoading;
     }
 
     @Override

@@ -18,18 +18,20 @@ public class Wharf_3 implements Runnable{
     @Override
     public void run() {
         List<MerchantShip> listOfShips = vesselRegistration.registration();
-        gettingUnloadingAndLoadingLists();
-        commencementOfWork(listOfShips);
-    }
-    private void gettingUnloadingAndLoadingLists() {
-        for (int i = 0; i < 4; i++) {
-            forUnloading = vesselRegistration.receivingDataForOffloading(forUnloading);
-            forDownload = vesselRegistration.gettingDataToLoad(forDownload);
+        for (MerchantShip merchantShip : listOfShips) {
+            gettingUnloadingAndLoadingLists(merchantShip);
+            commencementOfWork(merchantShip);
         }
     }
-    private void commencementOfWork(List<MerchantShip> listOfShips) {
-        Thread unloading = new Thread(new PerformingUnloading(plannedWorks, listOfShips, forUnloading));
-        Thread download = new Thread(new ToPerformADownload(plannedWorks, listOfShips, forDownload));
+    private void gettingUnloadingAndLoadingLists(MerchantShip merchantShip) {
+        for (int i = 0; i < 4; i++) {
+            forUnloading = vesselRegistration.receivingDataForOffloading(forUnloading);
+            forDownload = vesselRegistration.gettingDataToLoad(forDownload, merchantShip);
+        }
+    }
+    private void commencementOfWork(MerchantShip merchantShip) {
+        Thread unloading = new Thread(new PerformingUnloading(plannedWorks, merchantShip, forUnloading));
+        Thread download = new Thread(new ToPerformADownload(plannedWorks, merchantShip, forDownload));
 
         unloading.start();
         download.start();
