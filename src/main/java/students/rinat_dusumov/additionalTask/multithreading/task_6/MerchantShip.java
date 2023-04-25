@@ -12,6 +12,10 @@ public class MerchantShip {
     private final int totalWeightOfContainers; // общий вес
     private final int totalWeightAfterLoading;
 
+    public String getShipName() {
+        return shipName;
+    }
+
     public int getCarryingCapacity() {
         return carryingCapacity;
     }

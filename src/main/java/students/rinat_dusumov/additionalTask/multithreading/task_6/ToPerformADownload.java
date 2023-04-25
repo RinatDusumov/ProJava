@@ -21,7 +21,7 @@ public class ToPerformADownload implements Runnable {
                 plannedWorks.loading(merchantShip, forDownload);
                 plannedWorks.reductionOfGoodsInStock(forDownload);
             } else {
-                System.out.println("Грузоподъёмность была превышена!");
+                System.out.println("Грузоподъёмность торгового судна - " + merchantShip.getShipName() + ", была превышена!");
             }
         }
     }

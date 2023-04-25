@@ -90,7 +90,7 @@ public class VesselRegistration {
         totalWeightAfterLoading = sumWeightOfContainers + loadWeight;
     }
     void outputOfTheRegistrationResult (String shipName, String nameThread) {
-        System.out.println("Торговое судно - " + shipName + " зарегистрировано и ожидает на причале " +
+        System.out.println("Торговое судно - " + shipName + ", зарегистрировано и ожидает на причале " +
                 nameThread);
     }
 }
