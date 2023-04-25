@@ -1,32 +1,44 @@
 package main.java.students.rinat_dusumov.additionalTask.multithreading.task_6;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Wharf_1 implements Runnable{
     VesselRegistration vesselRegistration;
+    PlannedWorks plannedWorks;
 
-    public Wharf_1(VesselRegistration vesselRegistration) {
+    public Wharf_1(VesselRegistration vesselRegistration, PlannedWorks plannedWorks) {
 
         this.vesselRegistration = vesselRegistration;
+        this.plannedWorks = plannedWorks;
     }
 
     @Override
     public void run() {
         List<MerchantShip> listOfShips = vesselRegistration.registration();
-        Map<Integer, Integer> forUnloading = null;
-        Map<Integer, Integer> forDownload = null;
+        Map<Integer, Integer> forUnloading = new HashMap<>();
+        Map<Integer, Integer> forDownload = new HashMap<>();
 
         for (int i = 0; i < 4; i++) {
-            forUnloading = vesselRegistration.receivingDataForOffloading();
-            forDownload = vesselRegistration.gettingDataToLoad();
+            forUnloading = vesselRegistration.receivingDataForOffloading(forUnloading);
+            forDownload = vesselRegistration.gettingDataToLoad(forDownload);
         }
 
-        PlannedWorks plannedWorks = new PlannedWorks();
         Thread unloading = new Thread(new PerformingUnloading(plannedWorks, listOfShips, forUnloading));
-        Thread download = new Thread(new ToPerformADownload(new PlannedWorks(), listOfShips, forDownload));
+        Thread download = new Thread(new ToPerformADownload(plannedWorks, listOfShips, forDownload));
 
         unloading.start();
         download.start();
+        try {
+            unloading.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        try {
+            unloading.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

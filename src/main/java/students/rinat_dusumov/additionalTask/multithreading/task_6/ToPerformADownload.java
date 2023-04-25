@@ -6,7 +6,7 @@ import java.util.Map;
 public class ToPerformADownload implements Runnable {
     PlannedWorks plannedWorks;
     List<MerchantShip> listOfShips;
-    Map<Integer,Integer> forDownload;
+    Map<Integer, Integer> forDownload;
 
     public ToPerformADownload(PlannedWorks plannedWorks, List<MerchantShip> listOfShips, Map<Integer, Integer> forDownload) {
         this.plannedWorks = plannedWorks;
@@ -16,15 +16,12 @@ public class ToPerformADownload implements Runnable {
 
     @Override
     public void run() {
-        boolean isTheProductInStock = plannedWorks.checkForThePresenceOfCargo(forDownload);
-        if (isTheProductInStock) {
-            for (MerchantShip merchantShip : listOfShips) {
-                if (merchantShip.getTotalWeightAfterLoading() <= merchantShip.getCarryingCapacity()) {
-                    plannedWorks.loading(merchantShip, forDownload);
-                    plannedWorks.reductionOfGoodsInStock(forDownload);
-                } else {
-                    System.out.println("Грузоподъёмность была превышена!");
-                }
+        for (MerchantShip merchantShip : listOfShips) {
+            if (merchantShip.getTotalWeightAfterLoading() <= merchantShip.getCarryingCapacity()) {
+                plannedWorks.loading(merchantShip, forDownload);
+                plannedWorks.reductionOfGoodsInStock(forDownload);
+            } else {
+                System.out.println("Грузоподъёмность была превышена!");
             }
         }
     }

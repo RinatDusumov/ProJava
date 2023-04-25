@@ -65,9 +65,8 @@ public class VesselRegistration {
         sumWeightOfContainers += (containerWeight * numberOfContainers);
     }
 
-    Map<Integer, Integer> receivingDataForOffloading () {
+    Map<Integer, Integer> receivingDataForOffloading (Map<Integer,Integer> forUnloading) {
         synchronized (lock) {
-            Map<Integer, Integer> forUnloading = new HashMap<>();
             System.out.println("Данные для разгрузки:");
             int containerWeight = weightInput();
             System.out.print("Для разгрузки - ");
@@ -76,9 +75,8 @@ public class VesselRegistration {
             return forUnloading;
         }
     }
-    Map<Integer,Integer> gettingDataToLoad () {
+    Map<Integer,Integer> gettingDataToLoad (Map<Integer, Integer> forDownload) {
         synchronized (lock) {
-            Map<Integer, Integer> forDownload = new HashMap<>();
             System.out.println("Данные для загрузки:");
             int containerWeight = weightInput();
             System.out.print("Для загрузки - ");

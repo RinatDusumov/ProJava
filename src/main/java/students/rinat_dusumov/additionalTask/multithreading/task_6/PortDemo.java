@@ -25,7 +25,7 @@ public class PortDemo {
         return stockAvailability;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         cargoTerminalCapacity.put(1500, 100_000);
         cargoTerminalCapacity.put(5000, 100_000);
         cargoTerminalCapacity.put(3000, 100_000);
@@ -37,10 +37,10 @@ public class PortDemo {
         stockAvailability.put(10000,0);
 
         VesselRegistration vesselRegistration = new VesselRegistration();
-
-        Wharf_1 wharf_1 = new Wharf_1(vesselRegistration);
-        Wharf_2 wharf_2 = new Wharf_2(vesselRegistration);
-        Wharf_3 wharf_3 = new Wharf_3(vesselRegistration);
+        PlannedWorks plannedWorks = new PlannedWorks();
+        Wharf_1 wharf_1 = new Wharf_1(vesselRegistration, plannedWorks);
+        Wharf_2 wharf_2 = new Wharf_2(vesselRegistration, plannedWorks);
+        Wharf_3 wharf_3 = new Wharf_3(vesselRegistration, plannedWorks);
 
         Thread thread1 = new Thread(wharf_1, "Wharf_1");
         Thread thread2 = new Thread(wharf_2, "Wharf_2");
@@ -49,5 +49,14 @@ public class PortDemo {
         thread1.start();
         thread2.start();
         thread3.start();
+
+        thread1.join();
+        thread2.join();
+        thread3.join();
+
+        System.out.println("Остаток товара на складе: ");
+        for (Map.Entry<Integer, Integer> inStock : getStockAvailability().entrySet()) {
+            System.out.println(inStock);
+        }
     }
 }

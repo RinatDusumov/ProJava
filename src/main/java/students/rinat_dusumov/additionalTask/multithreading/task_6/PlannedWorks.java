@@ -31,43 +31,59 @@ public class PlannedWorks {
     }
 
     void unloading(MerchantShip merchantShip, Map<Integer, Integer> forUnloading) {
-        for (Map.Entry<Integer, Integer> ship : merchantShip.getPresenceOnTheVessel().entrySet()) {
-            for (Map.Entry<Integer, Integer> unloading : forUnloading.entrySet()) {
-                if (ship.getKey().equals(unloading.getKey())) {
-                    ship.setValue(ship.getValue() - unloading.getValue());
+        if(checkForAvailabilityOfSpace(forUnloading)) {
+            for (Map.Entry<Integer, Integer> ship : merchantShip.getPresenceOnTheVessel().entrySet()) {
+                for (Map.Entry<Integer, Integer> unloading : forUnloading.entrySet()) {
+                    if (ship.getKey().equals(unloading.getKey())) {
+                        ship.setValue(ship.getValue() - unloading.getValue());
+                    }
                 }
             }
+        } else {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            notify();
         }
     }
 
     void increaseInGoodsInStock(Map<Integer, Integer> forUnloading) {
         synchronized (lock_2) {
-            for (Map.Entry<Integer, Integer> unloading : forUnloading.entrySet()) {
-                for (Map.Entry<Integer, Integer> inStock : PortDemo.getStockAvailability().entrySet()) {
-                    if (unloading.getKey().equals(inStock.getKey())) {
-                        PortDemo.getStockAvailability().put(unloading.getKey(), unloading.getValue() +
-                                inStock.getValue());
+            for (Map.Entry<Integer, Integer> inStock : PortDemo.getStockAvailability().entrySet()) {
+                for (Map.Entry<Integer, Integer> unloading : forUnloading.entrySet()) {
+                    if (inStock.getKey().equals(unloading.getKey())) {
+                        inStock.setValue(unloading.getValue() + inStock.getValue());
                     }
                 }
             }
         }
     }
     void loading(MerchantShip merchantShip, Map<Integer, Integer> forDownload) {
-        for (Map.Entry<Integer, Integer> ship : merchantShip.getPresenceOnTheVessel().entrySet()) {
-            for (Map.Entry<Integer, Integer> download : forDownload.entrySet()) {
-                if (ship.getKey().equals(download.getKey())) {
-                    ship.setValue(ship.getValue() + download.getValue());
+        if (checkForThePresenceOfCargo(forDownload)) {
+            for (Map.Entry<Integer, Integer> ship : merchantShip.getPresenceOnTheVessel().entrySet()) {
+                for (Map.Entry<Integer, Integer> download : forDownload.entrySet()) {
+                    if (ship.getKey().equals(download.getKey())) {
+                        ship.setValue(ship.getValue() + download.getValue());
+                    }
                 }
             }
+        } else {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            notify();
         }
     }
     void reductionOfGoodsInStock (Map<Integer, Integer> forDownload) {
         synchronized (lock_2) {
-            for (Map.Entry<Integer, Integer> download : forDownload.entrySet()) {
-                for (Map.Entry<Integer,Integer> inStock : PortDemo.getStockAvailability().entrySet()) {
-                    if (download.getKey().equals(inStock.getKey())) {
-                        PortDemo.getStockAvailability().put(download.getKey(), inStock.getValue() -
-                                download.getValue());
+            for (Map.Entry<Integer, Integer> inStock : PortDemo.getStockAvailability().entrySet()) {
+                for (Map.Entry<Integer, Integer> download : forDownload.entrySet()) {
+                    if (inStock.getKey().equals(download.getKey())) {
+                        inStock.setValue(inStock.getValue() - download.getValue());
                     }
                 }
             }
