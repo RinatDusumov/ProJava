@@ -16,7 +16,5 @@ public class PerformingUnloading implements Runnable {
     @Override
     public void run() {
         plannedWorks.unloading(merchantShip, forUnloading);
-        plannedWorks.increaseInGoodsInStock(forUnloading);
-
     }
 }

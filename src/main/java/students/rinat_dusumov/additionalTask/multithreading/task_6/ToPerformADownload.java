@@ -21,7 +21,6 @@ public class ToPerformADownload implements Runnable {
     void forTheDownloadDepartment(MerchantShip merchantShip) {
         if (merchantShip.getTotalWeightAfterLoading() <= merchantShip.getCarryingCapacity()) {
             plannedWorks.loading(merchantShip, forDownload);
-            plannedWorks.reductionOfGoodsInStock(forDownload);
         } else {
             final VesselRegistration vesselRegistration = new VesselRegistration();
             System.out.println("Грузоподъёмность торгового судна - " + merchantShip.getShipName() + ", была превышена!");
