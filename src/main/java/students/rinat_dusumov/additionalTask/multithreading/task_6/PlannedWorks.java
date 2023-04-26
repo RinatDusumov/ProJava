@@ -5,16 +5,24 @@ import java.util.Map;
 public class PlannedWorks {
     private static final Object lock_2 = new Object();
 
+    boolean comparisonWithTheLimit (Map.Entry<Integer, Integer> unloading, Map.Entry<Integer, Integer> terminalLimit) {
+        boolean theKeysAreIdentical = false;
+        if (unloading.getKey().equals(terminalLimit.getKey())) {
+            theKeysAreIdentical = true;
+        }
+        return theKeysAreIdentical;
+    }
     boolean checkForAvailabilityOfSpace(Map.Entry<Integer, Integer> unloading) {
         boolean emptySpaces = false;
         for (Map.Entry<Integer, Integer> terminalLimit : PortDemo.getCargoTerminalCapacity().entrySet()) {
-            for (Map.Entry<Integer, Integer> inStock : PortDemo.stockAvailability.entrySet()) {
-                if (inStock.getKey().equals(unloading.getKey()) && (terminalLimit.getValue() -
-                        inStock.getValue()) >= unloading.getValue()) {
-                    emptySpaces = true;
-                    break;
+            if (comparisonWithTheLimit(unloading, terminalLimit)) {
+                for (Map.Entry<Integer, Integer> inStock : PortDemo.stockAvailability.entrySet()) {
+                    if (unloading.getKey().equals(inStock.getKey()) && (terminalLimit.getValue() -
+                            inStock.getValue()) >= unloading.getValue()) {
+                        emptySpaces = true;
+                        break;
+                    }
                 }
-
             }
         }
         return emptySpaces;
@@ -23,7 +31,7 @@ public class PlannedWorks {
     boolean checkForThePresenceOfCargo(Map.Entry<Integer, Integer> download) {
         boolean isThereAProduct = false;
         for (Map.Entry<Integer, Integer> inStock : PortDemo.getStockAvailability().entrySet()) {
-            if (inStock.getKey().equals(download.getKey()) && inStock.getValue() >= download.getValue()) {
+            if (download.getKey().equals(inStock.getKey()) && inStock.getValue() >= download.getValue()) {
                 isThereAProduct = true;
                 break;
             }
@@ -36,7 +44,7 @@ public class PlannedWorks {
         for (Map.Entry<Integer, Integer> unloading : forUnloading.entrySet()) {
             if (checkForAvailabilityOfSpace(unloading)) {
                 for (Map.Entry<Integer, Integer> ship : merchantShip.getPresenceOnTheVessel().entrySet()) {
-                    if (ship.getKey().equals(unloading.getKey())) {
+                    if (unloading.getKey().equals(ship.getKey())) {
                         ship.setValue(ship.getValue() - unloading.getValue());
                     }
                 }
@@ -67,7 +75,7 @@ public class PlannedWorks {
         for (Map.Entry<Integer, Integer> download : forDownload.entrySet()) {
             if (checkForThePresenceOfCargo(download)) {
                 for (Map.Entry<Integer, Integer> ship : merchantShip.getPresenceOnTheVessel().entrySet()) {
-                    if (ship.getKey().equals(download.getKey())) {
+                    if (download.getKey().equals(ship.getKey())) {
                         ship.setValue(ship.getValue() + download.getValue());
                     }
                 }
