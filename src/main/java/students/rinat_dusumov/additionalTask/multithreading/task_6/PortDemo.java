@@ -38,21 +38,12 @@ public class PortDemo {
 
         VesselRegistration vesselRegistration = new VesselRegistration();
         PlannedWorks plannedWorks = new PlannedWorks();
-        Wharf_1 wharf_1 = new Wharf_1(vesselRegistration, plannedWorks);
-        Wharf_2 wharf_2 = new Wharf_2(vesselRegistration, plannedWorks);
-        Wharf_3 wharf_3 = new Wharf_3(vesselRegistration, plannedWorks);
 
-        Thread thread1 = new Thread(wharf_1, "Wharf_1");
-        Thread thread2 = new Thread(wharf_2, "Wharf_2");
-        Thread thread3 = new Thread(wharf_3, "Wharf_3");
-
-        thread1.start();
-        thread2.start();
-        thread3.start();
-
-        thread1.join();
-        thread2.join();
-        thread3.join();
+        for (int i = 0; i < 3; i++) {
+            Thread thread = new Thread(new Wharf(vesselRegistration, plannedWorks), "Wharf_" + (i + 1));
+            thread.start();
+            thread.join();
+        }
 
         System.out.println("Остаток товара на складе: ");
         for (Map.Entry<Integer, Integer> inStock : getStockAvailability().entrySet()) {
