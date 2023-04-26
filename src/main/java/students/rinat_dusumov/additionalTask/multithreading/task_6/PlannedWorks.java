@@ -1,16 +1,13 @@
 package main.java.students.rinat_dusumov.additionalTask.multithreading.task_6;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class PlannedWorks {
     private static final Object lock_2 = new Object();
 
     boolean comparisonWithTheLimit(Map.Entry<Integer, Integer> unloading, Map.Entry<Integer, Integer> terminalLimit) {
-        boolean theKeysAreIdentical = false;
-        if (unloading.getKey().equals(terminalLimit.getKey())) {
-            theKeysAreIdentical = true;
-        }
-        return theKeysAreIdentical;
+        return Objects.equals(unloading.getKey(), terminalLimit.getKey());
     }
 
     boolean checkForAvailabilityOfSpace(Map.Entry<Integer, Integer> unloading) {
