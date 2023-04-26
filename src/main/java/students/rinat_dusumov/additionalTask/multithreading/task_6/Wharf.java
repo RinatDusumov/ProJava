@@ -95,11 +95,7 @@ public class Wharf implements Runnable {
         for (Map.Entry<Integer, Integer> unloading : forUnloading.entrySet()) {
             if (checkForAvailabilityOfSpace(unloading)) {
                 increaseInGoodsInStock(unloading);
-                for (Map.Entry<Integer, Integer> ship : merchantShip.getPresenceOnTheVessel().entrySet()) {
-                    if (unloading.getKey().equals(ship.getKey())) {
-                        ship.setValue(ship.getValue() - unloading.getValue());
-                    }
-                }
+                performanceOfUnloadingOperations(merchantShip, unloading);
             } else {
                 try {
                     wait();
@@ -121,16 +117,18 @@ public class Wharf implements Runnable {
             }
         }
     }
-
+    void performanceOfUnloadingOperations (MerchantShip merchantShip, Map.Entry<Integer, Integer> unloading) {
+        for (Map.Entry<Integer, Integer> ship : merchantShip.getPresenceOnTheVessel().entrySet()) {
+            if (unloading.getKey().equals(ship.getKey())) {
+                ship.setValue(ship.getValue() - unloading.getValue());
+            }
+        }
+    }
     void loading(MerchantShip merchantShip, Map<Integer, Integer> forDownload) {
         for (Map.Entry<Integer, Integer> download : forDownload.entrySet()) {
             if (checkForThePresenceOfCargo(download)) {
                 reductionOfGoodsInStock(download);
-                for (Map.Entry<Integer, Integer> ship : merchantShip.getPresenceOnTheVessel().entrySet()) {
-                    if (download.getKey().equals(ship.getKey())) {
-                        ship.setValue(ship.getValue() + download.getValue());
-                    }
-                }
+                executionOfLoadingWorks(merchantShip, download);
             } else {
                 try {
                     wait();
@@ -149,6 +147,13 @@ public class Wharf implements Runnable {
                     inStock.setValue(inStock.getValue() - download.getValue());
                     break;
                 }
+            }
+        }
+    }
+    void executionOfLoadingWorks (MerchantShip merchantShip, Map.Entry<Integer, Integer> download) {
+        for (Map.Entry<Integer, Integer> ship : merchantShip.getPresenceOnTheVessel().entrySet()) {
+            if (download.getKey().equals(ship.getKey())) {
+                ship.setValue(ship.getValue() + download.getValue());
             }
         }
     }
