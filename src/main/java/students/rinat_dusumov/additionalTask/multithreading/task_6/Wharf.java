@@ -6,15 +6,10 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Wharf implements Runnable {
-    private final VesselRegistration vesselRegistration;
+    private final VesselRegistration vesselRegistration = new VesselRegistration();
     private Map<Integer, Integer> forUnloading = new HashMap<>();
     private Map<Integer, Integer> forDownload = new HashMap<>();
     private final Object lock_2 = new Object();
-
-    public Wharf(VesselRegistration vesselRegistration) {
-
-        this.vesselRegistration = vesselRegistration;
-    }
 
     @Override
     public void run() {

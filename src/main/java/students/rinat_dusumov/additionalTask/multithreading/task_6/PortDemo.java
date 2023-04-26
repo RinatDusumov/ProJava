@@ -16,7 +16,6 @@ import java.util.Map;
 public class PortDemo {
     private static final Map<Integer, Integer> cargoTerminalCapacity = new HashMap<>(); // вес и количество по лимиту на терминале
     private static volatile Map<Integer, Integer> stockAvailability = new HashMap<>(); // наличие на складе
-    private static final VesselRegistration vesselRegistration = new VesselRegistration();
     public static Map<Integer, Integer> getCargoTerminalCapacity() {
         return cargoTerminalCapacity;
     }
@@ -45,7 +44,7 @@ public class PortDemo {
     }
     static void openingOfBerthsForTheReceptionOfMerchantShips () throws InterruptedException {
         for (int i = 0; i < 3; i++) {
-            Thread thread = new Thread(new Wharf(vesselRegistration), "Wharf_" + (i + 1));
+            Thread thread = new Thread(new Wharf(), "Wharf_" + (i + 1));
             thread.start();
             thread.join();
         }
