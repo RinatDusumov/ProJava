@@ -33,9 +33,8 @@ public class Wharf implements Runnable {
     }
 
     private void commencementOfWork(MerchantShip merchantShip) {
-        Thread unloading = new Thread(new PerformingUnloading(plannedWorks, merchantShip, forUnloading));
-        Thread download = new Thread(new ToPerformADownload(plannedWorks, merchantShip, forDownload));
-
+        Thread unloading = new Thread(() -> plannedWorks.unloading(merchantShip, forUnloading));
+        Thread download = new Thread(() -> forTheDownloadDepartment(merchantShip));
         unloading.start();
         download.start();
         try {
@@ -47,6 +46,17 @@ public class Wharf implements Runnable {
             unloading.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+    }
+    void forTheDownloadDepartment(MerchantShip merchantShip) {
+        if (merchantShip.getTotalWeightAfterLoading() <= merchantShip.getCarryingCapacity()) {
+            plannedWorks.loading(merchantShip, forDownload);
+        } else {
+            System.out.println("Грузоподъёмность торгового судна - " + merchantShip.getShipName() + ", была превышена!");
+            for (int i = 0; i < 4; i++) {
+                forDownload = vesselRegistration.gettingDataToLoad(forDownload, merchantShip);
+            }
+            forTheDownloadDepartment(merchantShip);
         }
     }
 }
