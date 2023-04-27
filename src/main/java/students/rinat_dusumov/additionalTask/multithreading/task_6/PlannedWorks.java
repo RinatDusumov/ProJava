@@ -5,6 +5,7 @@ import java.util.Objects;
 
 public class PlannedWorks {
     private final Object lock_2 = new Object();
+
     boolean comparisonWithTheLimit(Map.Entry<Integer, Integer> unloading, Map.Entry<Integer, Integer> terminalLimit) {
         return Objects.equals(unloading.getKey(), terminalLimit.getKey());
     }
@@ -38,69 +39,87 @@ public class PlannedWorks {
     }
 
     void unloading(MerchantShip merchantShip, Map<Integer, Integer> forUnloading) {
-        for (Map.Entry<Integer, Integer> unloading : forUnloading.entrySet()) {
-            if (checkForAvailabilityOfSpace(unloading)) {
-                increaseInGoodsInStock(unloading);
-                performanceOfUnloadingOperations(merchantShip, unloading);
-            } else {
-                try {
-                    wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+        synchronized (lock_2) {
+            for (Map.Entry<Integer, Integer> unloading : forUnloading.entrySet()) {
+                if (checkForAvailabilityOfSpace(unloading)) {
+                    increaseInGoodsInStock(unloading);
+                    performanceOfUnloadingOperations(merchantShip, unloading);
+                    lock_2.notify();
+                } else {
+                    try {
+                        lock_2.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    lock_2.notify();
                 }
-                notify();
             }
         }
     }
 
     void increaseInGoodsInStock(Map.Entry<Integer, Integer> unloading) {
-        synchronized (lock_2) {
-            for (Map.Entry<Integer, Integer> inStock : PortDemo.getStockAvailability().entrySet()) {
-                if (unloading.getKey().equals(inStock.getKey())) {
-                    inStock.setValue(unloading.getValue() + inStock.getValue());
-                    break;
-                }
+        for (Map.Entry<Integer, Integer> inStock : PortDemo.getStockAvailability().entrySet()) {
+            if (unloading.getKey().equals(inStock.getKey())) {
+                inStock.setValue(unloading.getValue() + inStock.getValue());
+                break;
             }
         }
     }
-    void performanceOfUnloadingOperations (MerchantShip merchantShip, Map.Entry<Integer, Integer> unloading) {
+
+    void performanceOfUnloadingOperations(MerchantShip merchantShip, Map.Entry<Integer, Integer> unloading) {
         for (Map.Entry<Integer, Integer> ship : merchantShip.getPresenceOnTheVessel().entrySet()) {
             if (unloading.getKey().equals(ship.getKey())) {
                 ship.setValue(ship.getValue() - unloading.getValue());
             }
         }
     }
+
     void loading(MerchantShip merchantShip, Map<Integer, Integer> forDownload) {
-        for (Map.Entry<Integer, Integer> download : forDownload.entrySet()) {
-            if (checkForThePresenceOfCargo(download)) {
-                reductionOfGoodsInStock(download);
-                executionOfLoadingWorks(merchantShip, download);
-            } else {
-                try {
-                    wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+        synchronized (lock_2) {
+            for (Map.Entry<Integer, Integer> download : forDownload.entrySet()) {
+                if (checkForThePresenceOfCargo(download)) {
+                    reductionOfGoodsInStock(download);
+                    executionOfLoadingWorks(merchantShip, download);
+                    lock_2.notify();
+                } else {
+                    try {
+                        lock_2.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    lock_2.notify();
                 }
-                notify();
             }
         }
     }
 
     void reductionOfGoodsInStock(Map.Entry<Integer, Integer> download) {
-        synchronized (lock_2) {
-            for (Map.Entry<Integer, Integer> inStock : PortDemo.getStockAvailability().entrySet()) {
-                if (download.getKey().equals(inStock.getKey())) {
-                    inStock.setValue(inStock.getValue() - download.getValue());
-                    break;
-                }
+        for (Map.Entry<Integer, Integer> inStock : PortDemo.getStockAvailability().entrySet()) {
+            if (download.getKey().equals(inStock.getKey())) {
+                inStock.setValue(inStock.getValue() - download.getValue());
+                break;
             }
         }
     }
-    void executionOfLoadingWorks (MerchantShip merchantShip, Map.Entry<Integer, Integer> download) {
+
+    void executionOfLoadingWorks(MerchantShip merchantShip, Map.Entry<Integer, Integer> download) {
         for (Map.Entry<Integer, Integer> ship : merchantShip.getPresenceOnTheVessel().entrySet()) {
             if (download.getKey().equals(ship.getKey())) {
                 ship.setValue(ship.getValue() + download.getValue());
             }
+        }
+    }
+
+    synchronized void forTheDownloadDepartment(MerchantShip merchantShip, Map<Integer, Integer> forDownload) {
+        if (merchantShip.getTotalWeightAfterLoading() <= merchantShip.getCarryingCapacity()) {
+            loading(merchantShip, forDownload);
+        } else {
+            final VesselRegistration vesselRegistration = new VesselRegistration();
+            System.out.println("Грузоподъёмность торгового судна - " + merchantShip.getShipName() + ", была превышена!");
+            for (int i = 0; i < 4; i++) {
+                forDownload = vesselRegistration.gettingDataToLoad(forDownload, merchantShip);
+            }
+            forTheDownloadDepartment(merchantShip, forDownload);
         }
     }
 }

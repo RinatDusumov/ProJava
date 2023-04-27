@@ -49,11 +49,11 @@ public class VesselRegistration {
         return goodsOnTheShip;
     }
     private int weightInput() {
-        System.out.println("Укажите вес группы (1500, 3000, 5000, 10000)");
+        System.out.print("Укажите вес группы (1500, 3000, 5000, 10000) - ");
         return scr.nextInt();
     }
     private int quantityInput() {
-        System.out.println("Укажите количество контейнеров");
+        System.out.print("Укажите количество контейнеров - ");
         return scr.nextInt();
     }
     private void countingTheTotalNumberOfContainers (int numberOfContainers) {
@@ -63,11 +63,11 @@ public class VesselRegistration {
         sumWeightOfContainers += (containerWeight * numberOfContainers);
     }
 
-    Map<Integer, Integer> receivingDataForOffloading (Map<Integer,Integer> forUnloading) {
+    Map<Integer, Integer> receivingDataForOffloading (Map<Integer,Integer> forUnloading, MerchantShip merchantShip) {
         synchronized (lock) {
-            System.out.println("Данные для разгрузки:");
+            System.out.println("Данные для разгрузки судна - " + merchantShip.getShipName());
             int containerWeight = weightInput();
-            System.out.print("Для разгрузки - ");
+            System.out.print("Количество контейнеров - ");
             int quantityForUnloading = scr.nextInt();
             forUnloading.put(containerWeight, quantityForUnloading);
             return forUnloading;
@@ -77,7 +77,7 @@ public class VesselRegistration {
         synchronized (lock) {
             System.out.println("Данные для загрузки судна - " + merchantShip.getShipName());
             int containerWeight = weightInput();
-            System.out.print("Для загрузки - ");
+            System.out.print("Количество контейнеров - ");
             int quantityToDownload = scr.nextInt();
             forDownload.put(containerWeight, quantityToDownload);
             loadWeight += (containerWeight * quantityToDownload);

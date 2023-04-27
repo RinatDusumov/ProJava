@@ -45,18 +45,12 @@ public class PortDemo {
         stockAvailability.put(10000,0);
     }
     static void openingOfBerthsForTheReceptionOfMerchantShips () throws InterruptedException {
-        Wharf_1 wharf_1 = new Wharf_1(vesselRegistration, plannedWorks);
-        Wharf_2 wharf_2 = new Wharf_2(vesselRegistration, plannedWorks);
-        Wharf_3 wharf_3 = new Wharf_3(vesselRegistration, plannedWorks);
-
-        Thread thread1 = new Thread(wharf_1, "Wharf_1");
-        Thread thread2 = new Thread(wharf_2, "Wharf_2");
-        Thread thread3 = new Thread(wharf_3, "Wharf_3");
-
+        Thread thread1 = new Thread(new Wharf(vesselRegistration,plannedWorks), "Wharf_1");
+        Thread thread2 = new Thread(new Wharf(vesselRegistration,plannedWorks), "Wharf_2");
+        Thread thread3 = new Thread(new Wharf(vesselRegistration,plannedWorks), "Wharf_3");
         thread1.start();
         thread2.start();
         thread3.start();
-
         thread1.join();
         thread2.join();
         thread3.join();
