@@ -5,15 +5,16 @@ import java.util.*;
 public class VesselRegistration {
     private static final Object lock = new Object();
     private static final Scanner scr = new Scanner(System.in);
+    private final Map<Integer, Integer> goodsOnTheShip = new HashMap<>();     // товар на судне
     private int sumNumberOfContainers = 0;
     private int sumWeightOfContainers = 0;
-    private volatile int loadWeight = 0;
+    private int loadWeight = 0;
 
     List<MerchantShip> registration() {
         synchronized (lock) {
             String shipName = getting_a_name();
             int carryingCapacity = obtaining_maximum_load_capacity();
-            Map<Integer,Integer> goodsOnTheShip = classificationOfContainers();
+            classificationOfContainers();
 
             List<MerchantShip> listOfShips = new LinkedList<>();
             listOfShips.add(new MerchantShip(Thread.currentThread().getName(),
@@ -33,20 +34,15 @@ public class VesselRegistration {
         System.out.println("Максимальная грузоподъёмность корабля?");
         return scr.nextInt();
     }
-    private Map<Integer,Integer> classificationOfContainers() {
-        Map<Integer, Integer> goodsOnTheShip = new HashMap<>();     // товар на судне
-        int containerWeight;
-        int numberOfContainers;
+    private void classificationOfContainers() {
         System.out.println("Вес контейнеров и количество на корабле");
         for (int i = 0; i < 4; i++) {
-            containerWeight = weightInput();
-            numberOfContainers = quantityInput();
-
+            int containerWeight = weightInput();
+            int numberOfContainers = quantityInput();
             goodsOnTheShip.put(containerWeight, numberOfContainers);
-            countingTheTotalNumberOfContainers(numberOfContainers);
-            calculationOfTheTotalWeightOfContainers(containerWeight, numberOfContainers);
+            sumNumberOfContainers += numberOfContainers;
+            sumWeightOfContainers += (containerWeight * numberOfContainers);
         }
-        return goodsOnTheShip;
     }
     private int weightInput() {
         System.out.print("Укажите вес группы (1500, 3000, 5000, 10000) - ");
@@ -56,19 +52,12 @@ public class VesselRegistration {
         System.out.print("Укажите количество контейнеров - ");
         return scr.nextInt();
     }
-    private void countingTheTotalNumberOfContainers (int numberOfContainers) {
-        sumNumberOfContainers += numberOfContainers;
-    }
-    private void calculationOfTheTotalWeightOfContainers (int containerWeight, int numberOfContainers) {
-        sumWeightOfContainers += (containerWeight * numberOfContainers);
-    }
 
     Map<Integer, Integer> receivingDataForOffloading (Map<Integer,Integer> forUnloading, MerchantShip merchantShip) {
         synchronized (lock) {
             System.out.println("Данные для разгрузки судна - " + merchantShip.getShipName());
             int containerWeight = weightInput();
-            System.out.print("Количество контейнеров - ");
-            int quantityForUnloading = scr.nextInt();
+            int quantityForUnloading = quantityInput();
             forUnloading.put(containerWeight, quantityForUnloading);
             return forUnloading;
         }
@@ -77,15 +66,14 @@ public class VesselRegistration {
         synchronized (lock) {
             System.out.println("Данные для загрузки судна - " + merchantShip.getShipName());
             int containerWeight = weightInput();
-            System.out.print("Количество контейнеров - ");
-            int quantityToDownload = scr.nextInt();
+            int quantityToDownload = quantityInput();
             forDownload.put(containerWeight, quantityToDownload);
-            loadWeight += (containerWeight * quantityToDownload);
-            calculationOfTheTotalWeightAfterLoading (merchantShip);
+            calculationOfTheWeightOfTheLoadedCargo (containerWeight, quantityToDownload, merchantShip);
             return forDownload;
         }
     }
-    void calculationOfTheTotalWeightAfterLoading (MerchantShip merchantShip) {
+    void calculationOfTheWeightOfTheLoadedCargo (int containerWeight, int quantityToDownload, MerchantShip merchantShip) {
+        loadWeight += (containerWeight * quantityToDownload);
         merchantShip.setTotalWeightAfterLoading(merchantShip.getTotalWeightOfContainers() + loadWeight);
     }
     void outputOfTheRegistrationResult (String shipName, String nameThread) {
