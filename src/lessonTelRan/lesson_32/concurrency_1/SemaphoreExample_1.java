@@ -20,7 +20,7 @@ public class SemaphoreExample_1 {
 
         for (int i = 0; i < personNames.length; i++) {
             new Thread(new Person(personNames[i], semaphore, freeTables)).start();
-            Thread.sleep(700);
+            Thread.sleep(1000);
         }
     }
 }

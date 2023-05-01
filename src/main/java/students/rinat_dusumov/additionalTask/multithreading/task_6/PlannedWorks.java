@@ -1,10 +1,29 @@
 package main.java.students.rinat_dusumov.additionalTask.multithreading.task_6;
 
+import udemy.multithreading.SynchronizedBlock2;
+
 import java.util.Map;
 import java.util.Objects;
+import java.util.Scanner;
 
-public class PlannedWorks {
+class PlannedWorks {
     private final Object lock_2 = new Object();
+    private static final Object lock_3 = new Object();
+    private static final Scanner scr = new Scanner(System.in);
+    static int gettingTheNumberOfBerthingPlaces () {
+        synchronized (lock_3) {
+            System.out.print("Количество мест для причаливания? - ");
+            int numberOfBerthingPlaces = scr.nextInt();
+            return numberOfBerthingPlaces;
+        }
+    }
+    static int gettingTheNumberOfMerchantShips () {
+        synchronized (lock_3) {
+            System.out.print("Количество кораблей? - ");
+            int numberOfShips = scr.nextInt();
+            return numberOfShips;
+        }
+    }
 
     boolean comparisonWithTheLimit(Map.Entry<Integer, Integer> unloading, Map.Entry<Integer, Integer> terminalLimit) {
         return Objects.equals(unloading.getKey(), terminalLimit.getKey());

@@ -1,7 +1,10 @@
 package main.java.students.rinat_dusumov.additionalTask.multithreading.task_6;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
 /**
  Написать программу, моделирующую работу порта. Корабли могут заходить в порт
@@ -45,15 +48,13 @@ public class PortDemo {
         stockAvailability.put(10000,0);
     }
     static void openingOfBerthsForTheReceptionOfMerchantShips () throws InterruptedException {
-        Thread thread1 = new Thread(new Wharf(vesselRegistration,plannedWorks), "Wharf_1");
-        Thread thread2 = new Thread(new Wharf(vesselRegistration,plannedWorks), "Wharf_2");
-        Thread thread3 = new Thread(new Wharf(vesselRegistration,plannedWorks), "Wharf_3");
-        thread1.start();
-        thread2.start();
-        thread3.start();
-        thread1.join();
-        thread2.join();
-        thread3.join();
+        ExecutorService operatingBerths = Executors.newFixedThreadPool(3);
+        for (int i = 0; i < 3; i++) {
+            int numberOfBerthingPlaces = PlannedWorks.gettingTheNumberOfBerthingPlaces();
+            operatingBerths.execute(new Wharf(vesselRegistration, plannedWorks, new Semaphore(numberOfBerthingPlaces)));
+        }
+        operatingBerths.shutdown();
+        operatingBerths.awaitTermination(10, TimeUnit.MINUTES);
     }
     static void outputOfTheResultAfterTheWorkIsCompleted () {
         System.out.println("Остаток товара на складе: ");

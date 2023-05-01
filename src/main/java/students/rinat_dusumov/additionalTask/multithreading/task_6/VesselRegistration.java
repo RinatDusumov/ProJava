@@ -10,24 +10,22 @@ public class VesselRegistration {
     private int sumWeightOfContainers = 0;
     private int loadWeight = 0;
 
-    List<MerchantShip> registration() {
+    MerchantShip registration() {
         synchronized (lock) {
             String shipName = getting_a_name();
             int carryingCapacity = obtaining_maximum_load_capacity();
             classificationOfContainers();
-
-            List<MerchantShip> listOfShips = new LinkedList<>();
-            listOfShips.add(new MerchantShip(Thread.currentThread().getName(),
+            MerchantShip merchantShip = new MerchantShip(Thread.currentThread().getName(),
                     shipName, carryingCapacity, goodsOnTheShip, sumNumberOfContainers,
-                    sumWeightOfContainers));
+                    sumWeightOfContainers);
 
-            outputOfTheRegistrationResult(shipName, Thread.currentThread().getName());
+            outputOfTheRegistrationResult(shipName);
 
-            return listOfShips;
+            return merchantShip;
        }
     }
     private String getting_a_name() {
-        System.out.println("Укажите название текущего торгового судна.");
+        System.out.println("\nУкажите название текущего торгового судна.");
         return scr.next();
     }
     private int obtaining_maximum_load_capacity() {
@@ -76,8 +74,7 @@ public class VesselRegistration {
         loadWeight += (containerWeight * quantityToDownload);
         merchantShip.setTotalWeightAfterLoading(merchantShip.getTotalWeightOfContainers() + loadWeight);
     }
-    void outputOfTheRegistrationResult (String shipName, String nameThread) {
-        System.out.println("Торговое судно - " + shipName + ", зарегистрировано и ожидает на причале " +
-                nameThread);
+    void outputOfTheRegistrationResult (String shipName) {
+        System.out.println("Торговое судно - " + shipName + ", зарегистрировано");
     }
 }

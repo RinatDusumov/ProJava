@@ -46,10 +46,10 @@ class SquareEquation {
         double discriminant = Math.pow(param2,2) -
                 (4 * param1 * param3);
         double numberOfRoots = 0;
-//        if (discriminant < 0) {
-//            System.out.println("Корней нет");
-//            numberOfRoots = 0;
-//        }
+        if (discriminant < 0) {
+            System.out.println("Корней нет");
+            numberOfRoots = 0;
+        }
         if (discriminant == 0 ) {
             double root = (param2 * -1) / 2 * param1;
             Roots roots = new Roots(root);
