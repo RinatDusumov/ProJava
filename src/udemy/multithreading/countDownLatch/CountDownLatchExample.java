@@ -30,11 +30,11 @@ class CountDownLatchExample {
         System.out.println("CountDownLatch = " + countDownLatch.getCount());
     }
     public static void main(String[] args) throws InterruptedException {
-        new Friend("Zaur", countDownLatch);
-        new Friend("Oleg", countDownLatch);
-        new Friend("Elena", countDownLatch);
-        new Friend("Victor", countDownLatch);
-        new Friend("Marina", countDownLatch);
+        new Friend("Zaur", countDownLatch).start();
+        new Friend("Oleg", countDownLatch).start();
+        new Friend("Elena", countDownLatch).start();
+        new Friend("Victor", countDownLatch).start();
+        new Friend("Marina", countDownLatch).start();
 
         marketStaffIsOnPlace();
         everythingIsReady();
