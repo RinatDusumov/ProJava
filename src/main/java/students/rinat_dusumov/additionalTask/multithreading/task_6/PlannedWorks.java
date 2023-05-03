@@ -1,28 +1,17 @@
 package main.java.students.rinat_dusumov.additionalTask.multithreading.task_6;
 
-import udemy.multithreading.SynchronizedBlock2;
-
 import java.util.Map;
 import java.util.Objects;
 import java.util.Scanner;
 
 class PlannedWorks {
     private final Object lock_2 = new Object();
-    private static final Object lock_3 = new Object();
     private static final Scanner scr = new Scanner(System.in);
-    static int gettingTheNumberOfBerthingPlaces () {
-        synchronized (lock_3) {
-            System.out.print("Количество мест для причаливания? - ");
-            int numberOfBerthingPlaces = scr.nextInt();
-            return numberOfBerthingPlaces;
-        }
-    }
-    static int gettingTheNumberOfMerchantShips () {
-        synchronized (lock_3) {
-            System.out.print("Количество кораблей? - ");
-            int numberOfShips = scr.nextInt();
-            return numberOfShips;
-        }
+
+    static int gettingTheNumberOfMerchantShips() {
+        System.out.print("Количество кораблей? - ");
+        return scr.nextInt();
+
     }
 
     boolean comparisonWithTheLimit(Map.Entry<Integer, Integer> unloading, Map.Entry<Integer, Integer> terminalLimit) {
@@ -126,19 +115,6 @@ class PlannedWorks {
             if (download.getKey().equals(ship.getKey())) {
                 ship.setValue(ship.getValue() + download.getValue());
             }
-        }
-    }
-
-    synchronized void forTheDownloadDepartment(MerchantShip merchantShip, Map<Integer, Integer> forDownload) {
-        if (merchantShip.getTotalWeightAfterLoading() <= merchantShip.getCarryingCapacity()) {
-            loading(merchantShip, forDownload);
-        } else {
-            final VesselRegistration vesselRegistration = new VesselRegistration();
-            System.out.println("Грузоподъёмность торгового судна - " + merchantShip.getShipName() + ", была превышена!");
-            for (int i = 0; i < 4; i++) {
-                forDownload = vesselRegistration.gettingDataToLoad(forDownload, merchantShip);
-            }
-            forTheDownloadDepartment(merchantShip, forDownload);
         }
     }
 }

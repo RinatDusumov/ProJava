@@ -1,7 +1,6 @@
 package main.java.students.rinat_dusumov.additionalTask.multithreading.task_6;
 
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class MerchantShip {
     private final String shipName;
@@ -11,6 +10,24 @@ public class MerchantShip {
     private final int totalNumberOfContainers; // общее количество
     private final int totalWeightOfContainers; // общий вес
     private int totalWeightAfterLoading = 0;
+    private Map<Integer, Integer> forUnloading = new HashMap<>();
+    private Map<Integer, Integer> forDownload = new HashMap<>();
+
+    public Map<Integer, Integer> getForUnloading() {
+        return forUnloading;
+    }
+
+    public void setForUnloading(Map<Integer, Integer> forUnloading) {
+        this.forUnloading = forUnloading;
+    }
+
+    public Map<Integer, Integer> getForDownload() {
+        return forDownload;
+    }
+
+    public void setForDownload(Map<Integer, Integer> forDownload) {
+        this.forDownload = forDownload;
+    }
 
     public String getShipName() {
         return shipName;
@@ -51,15 +68,13 @@ public class MerchantShip {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        main.java.students.rinat_dusumov.additionalTask.multithreading.task_6.MerchantShip that = (main.java.students.rinat_dusumov.additionalTask.multithreading.task_6.MerchantShip) o;
-        return carryingCapacity == that.carryingCapacity && totalNumberOfContainers == that.totalNumberOfContainers &&
-                totalWeightOfContainers == that.totalWeightOfContainers && Objects.equals(shipName, that.shipName) &&
-                Objects.equals(nameThread, that.nameThread) && Objects.equals(presenceOnTheVessel, that.presenceOnTheVessel);
+        MerchantShip that = (MerchantShip) o;
+        return carryingCapacity == that.carryingCapacity && totalNumberOfContainers == that.totalNumberOfContainers;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(shipName, nameThread, carryingCapacity, presenceOnTheVessel, totalNumberOfContainers, totalWeightOfContainers);
+        return Objects.hash(carryingCapacity, totalNumberOfContainers);
     }
 
     @Override
