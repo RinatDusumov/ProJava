@@ -22,10 +22,10 @@ public class ThreadPoolEx2 {
 //        scheduledExecutorService.schedule(new RunnableImp200(), // выполнение каждые три секунды
 //                3, TimeUnit.SECONDS);
 
-//        scheduledExecutorService.scheduleAtFixedRate(new RunnableImp200(), // период между началом первого и началом следующего потока
+//        scheduledExecutorService.scheduleAtFixedRate(new RunnableImp200(), // период между началом первой и началом следующей задачи
 //                3, 1, TimeUnit.SECONDS);
 
-        scheduledExecutorService.scheduleWithFixedDelay(new RunnableImp200(), // период между окончанием первого и началом следующего.
+        scheduledExecutorService.scheduleWithFixedDelay(new RunnableImp200(), // период между окончанием первой и началом следующей.
                 3, 1, TimeUnit.SECONDS);
 
         Thread.sleep(20000);

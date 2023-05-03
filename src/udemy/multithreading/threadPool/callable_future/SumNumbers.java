@@ -1,4 +1,4 @@
-package udemy.multithreading.callable_future;
+package udemy.multithreading.threadPool.callable_future;
 
 import java.util.ArrayList;
 import java.util.List;

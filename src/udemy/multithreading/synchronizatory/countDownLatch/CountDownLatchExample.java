@@ -1,4 +1,4 @@
-package udemy.multithreading.countDownLatch;
+package udemy.multithreading.synchronizatory.countDownLatch;
 
 import java.util.concurrent.CountDownLatch;
 

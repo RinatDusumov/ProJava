@@ -1,4 +1,4 @@
-package udemy.multithreading.exchanger;
+package udemy.multithreading.synchronizatory.exchanger;
 
 import java.util.ArrayList;
 import java.util.List;

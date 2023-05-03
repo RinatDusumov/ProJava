@@ -1,4 +1,4 @@
-package udemy.multithreading.semaphore;
+package udemy.multithreading.synchronizatory.semaphore;
 
 
 import java.util.concurrent.Semaphore;
